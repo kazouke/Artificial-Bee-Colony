@@ -5,5 +5,6 @@
 
 int main(int argc, char** argv) {
 	std::cout<<"ok";
+	std::cout<<"jambon;
 	return 0;
 }
