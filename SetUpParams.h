@@ -1,5 +1,6 @@
 #ifndef SETUPPARAMS_H
 #define SETUPPARAMS_H
+#include <iostream>
 
 class SetUpParams
 {
@@ -14,8 +15,8 @@ class SetUpParams
 	public:
 		SetUpParams ();
 	
-		friend ostream& operator<< (ostream& os, const SetUpParams& setup);
-		friend istream& operator>> (istream& is, SetUpParams& setup);
+		friend std::ostream& operator<< (std::ostream& os, const SetUpParams& setup);
+		friend std::istream& operator>> (std::istream& is, SetUpParams& setup);
 	
 		const unsigned int   independent_runs() const;
 		const unsigned int   nb_evolution_steps() const;
