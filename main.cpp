@@ -1,7 +1,7 @@
 #include <iostream>
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
-/* Test pour Github*/
+/* Test pour Github - ICI C'EST LE MASTER*/
 
 int main(int argc, char** argv) {
 	std::cout<<"ok";
