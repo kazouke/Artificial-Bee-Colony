@@ -6,6 +6,6 @@
 int main(int argc, char** argv) {
 	std::cout<<"ok ";
 	std::cout<<"jambon ";
-	std::cout<<"parce qu'on aime ca !";
+	std::cout<<"parce qu'on aime ca ! couin";
 	return 0;
 }
