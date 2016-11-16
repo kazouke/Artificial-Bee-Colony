@@ -1,10 +1,10 @@
 #include "SetUpParams.h"
 
 SetUpParams::SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize) :
-    _independent_runs(nbRuns),
-    _nb_evolution_steps(nbEvoSteps),
-    _population_size(popSize),
-    _solution_size(solSize)
+    _independent_runs{nbRuns},
+    _nb_evolution_steps{nbEvoSteps},
+    _population_size{popSize},
+    _solution_size{solSize}
 {}
 
 
