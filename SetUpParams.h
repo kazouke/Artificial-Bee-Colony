@@ -4,7 +4,7 @@
 
 class SetUpParams
 {
-	//ici vous devez mettre quelques paramï¿½tres tels que :
+	//Initialisation des paramètres de l'algorithme ABC
 
 	private:
 		unsigned int   _independent_runs;         //number of independent runs
@@ -13,7 +13,7 @@ class SetUpParams
 		unsigned int   _solution_size;	        // size of each particle
 	
 	public:
-		SetUpParams ();
+		SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
 	
 		friend std::ostream& operator<< (std::ostream& os, const SetUpParams& setup);
 		friend std::istream& operator>> (std::istream& is, SetUpParams& setup);
