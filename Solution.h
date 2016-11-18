@@ -2,10 +2,11 @@
 #define SOLUTION_H
 #include <iostream>
 #include <vector>
+#include "Problem.h"
 class Solution
   {
-  	class Problem;
-	//contient la dï¿½claration d'une solution
+  	//class Problem;
+	//contient la déclaration d'une solution
 	public:
 		Solution (const Problem& pbm);
 		Solution (const Solution& sol);
@@ -16,20 +17,20 @@ class Solution
 
 		const Problem& pbm() const;
 
-		Solution& operator=  (const Solution& sol);
+		Solution& operator= (const Solution& sol);
 		bool operator== (const Solution& sol) const;
 		bool operator!= (const Solution& sol) const;
 
-		void initialize();
+		void initialize(); // nourriture à initialiser = lower limit + rand(0,1) * (upper limit - lower limit)
 		double fitness();
-		double get_fitness();
+		double get_fitness() const;
 
 		unsigned int size() const;
 
 		std::vector<double>& solution();
 
 		double& position(const int index); //retournera une position du tableau _solution
-        void  position(const int index, const double value);
+        void position(const int index, const double value);
 
 
 	private:
