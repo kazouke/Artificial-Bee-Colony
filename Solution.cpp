@@ -45,7 +45,7 @@ double Solution::get_fitness() const {
 }
 
 unsigned int Solution::size() const {
-	return _solition.size();
+	return _solution.size();
 }
 
 std::vector<double>& Solution::solution() {
