@@ -1,10 +1,10 @@
 #include "Solution.h"
 
-Solution::Solution (const Problem& pbm) : _solution{0}, _pbm{pbm} {
+Solution::Solution (const Problem& pbm) : _solution{0}, _current_fitness{INT_MAX}, _pbm{pbm} {
 	_solution.resize(pbm.dimension());
 }
 
-//Solution::Solution (const Solution& sol) {}
+Solution::Solution (const Solution& sol) : _solution{sol._solution}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {}
 
 Solution::~Solution() {}
 
@@ -22,17 +22,23 @@ const Problem& Solution::pbm() const {
 	return _pbm;
 }
 
-Solution& Solution::operator= (const Solution& sol) {}
+Solution& Solution::operator= (const Solution& sol) {
+	_solution = sol._solution;
+	_current_fitness = sol._current_fitness;
+}
 
-bool Solution::operator== (const Solution& sol) const {}
+bool Solution::operator== (const Solution& sol) const {
+	return _solution == sol._solution && _current_fitness == sol._current_fitness && _pbm == sol._pbm;
+}
 
-bool Solution::operator!= (const Solution& sol) const {}
+bool Solution::operator!= (const Solution& sol) const {
+	return !(*this == sol);
+}
 
 void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
 		double r = 1.0*rand() / (RAND_MAX+1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
-		std::cout << _solution[i] << std::endl;
 	}
 }
 
