@@ -1,16 +1,24 @@
 #include <iostream>
+#include <ctime>
 #include "Solution.h"
 #include "Problem.h"
-#include <ctime>
+#include "SetUpParams.h"
+#include "bench.h"
+#include "MyAlgorithm.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 /* Test pour Github - ICI C'EST LE MASTER*/
 
+Fonction F=somme_rastrigin;
+
 int main(int argc, char** argv) {
 	srand(time(0));
-	Problem p{5,10,10};
-	Solution s{p};
-	s.initialize();
+	
+	Problem P(10, 100, 30, F);
+	SetUpParams sup{30, 3000, 30, 30};
+	
+	ABC A{P,sup};
+	A.launch();
 	
 	return 0;
 }

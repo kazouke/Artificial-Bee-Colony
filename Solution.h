@@ -23,7 +23,6 @@ class Solution
 
 		void initialize(); // nourriture à initialiser = lower limit + rand(0,1) * (upper limit - lower limit)
 		double fitness();
-		double get_fitness() const;
 
 		unsigned int size() const;
 

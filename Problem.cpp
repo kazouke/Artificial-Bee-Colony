@@ -1,9 +1,10 @@
 #include "Problem.h"
 
-Problem::Problem(double lowLim, double upLim, int dim):
+Problem::Problem(double lowLim, double upLim, int dim, Fonction f):
 	_lowerLimit{lowLim},
 	_upperLimit{upLim},
-	_dimension{dim}
+	_dimension{dim},
+	_fonction{f}
 {
 }
 
@@ -31,4 +32,9 @@ double Problem::upperLimit() const
 int Problem::dimension() const
 {
 	return _dimension;
+}
+
+Fonction Problem::f() const
+{
+    return _fonction;
 }

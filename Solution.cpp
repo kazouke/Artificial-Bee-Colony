@@ -1,10 +1,8 @@
 #include "Solution.h"
 
-Solution::Solution (const Problem& pbm) : _solution{0}, _pbm{pbm} {
-	_solution.resize(pbm.dimension());
+Solution::Solution (const Problem& pbm) : _solution{pbm.dimension()}, _current_fitness{INT_MAX}, _pbm{pbm} {
+	initialize();
 }
-
-//Solution::Solution (const Solution& sol) {}
 
 Solution::~Solution() {}
 
@@ -32,16 +30,14 @@ void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
 		double r = 1.0*rand() / (RAND_MAX+1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
-		std::cout << _solution[i] << std::endl;
+		std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
 }
 
 double Solution::fitness() {
-	
-}
-
-double Solution::get_fitness() const {
-	return _current_fitness;
+	_current_fitness=(_pbm.f())(_solution);
+	std::cout <<"Fitness : " <<_current_fitness << std::endl;
+    return _current_fitness;
 }
 
 unsigned int Solution::size() const {
