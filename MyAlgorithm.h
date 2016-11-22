@@ -23,9 +23,6 @@ class ABC
 		ABC(const Problem& pbm,const SetUpParams& setup); 
 		~ABC();
 
-//~		friend 	ostream& operator<< (ostream& os, const ABC& myAlgo);								//
-//~		friend 	istream& operator>> (istream& is, ABC& myAlgo);										//
-//X		ABC& operator= (const ABC& myAlgo);															//
 		const SetUpParams& setup() const;															// retourne les paramètres
 	  	void initialize();	//Revoir																//
  
@@ -36,17 +33,17 @@ class ABC
 		int upper_cost() const;																		//
 		int lower_cost() const;																		//
 		Solution& solution(const int index) const;													//
-     vector<struct particle>&  fitness_values();													//
+    	vector<struct particle>&  fitness_values();													//
 		double fitness(const int index) const;														//
          
 		 
 		double best_cost() const;																	//
 		double worst_cost() const;																	//
-//X		Solution& best_solution() const;															//
-//X		Solution& worst_solution() const;															//
-		 
-//X		void evolution();																	// makes an evolution step
-		void trier(std::vector<particle> &fitnessValues, std::vector<Solution*> &solutions);		// trie croissant des solutions par rapport à la fitness
+
+		void trier();		// trie croissant des solutions par rapport à la fitness
+		int imin(int i) const;
+		
+		void launch();	//lance l'algo ABC
 
 	private:
 		vector<Solution*> 		d_solutions;     													// individuals in population

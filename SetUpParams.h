@@ -13,21 +13,19 @@ class SetUpParams
 		unsigned int   _solution_size;	        // size of each particle
 	
 	public:
+		SetUpParams()=delete;
 		SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
-	
+		~SetUpParams()=default;
+		
+		/*
 		friend std::ostream& operator<< (std::ostream& os, const SetUpParams& setup);
 		friend std::istream& operator>> (std::istream& is, SetUpParams& setup);
-	
+		*/
 		const unsigned int   independent_runs() const;
 		const unsigned int   nb_evolution_steps() const;
 		const unsigned int   population_size() const;
 		const unsigned int   solution_size() const;
-		void independent_runs(const unsigned int val);
-		void nb_evolution_steps(const unsigned int val);
-		void population_size(const unsigned int val);
-		void solution_size(const unsigned int val);
 
-	~SetUpParams();
 };
 
 #endif
