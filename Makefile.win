@@ -4,14 +4,14 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o Problem.o Solution.o SetUpParams.o MyAlgorithm.o
-LINKOBJ  = main.o Problem.o Solution.o SetUpParams.o MyAlgorithm.o
+OBJ      = main.o Problem.o Solution.o SetUpParams.o MyAlgorithm.o bench.o
+LINKOBJ  = main.o Problem.o Solution.o SetUpParams.o MyAlgorithm.o bench.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/x86_64-w64-mingw32/lib" -static-libstdc++ -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/lib/gcc/x86_64-w64-mingw32/6.2.1/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/gcc-6-win64/lib/gcc/x86_64-w64-mingw32/6.2.1/include"
 BIN      = ABC.exe
-CXXFLAGS = $(CXXINCS) -std=c++11
-CFLAGS   = $(INCS) -std=c++11
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -38,3 +38,6 @@ SetUpParams.o: SetUpParams.cpp
 
 MyAlgorithm.o: MyAlgorithm.cpp
 	$(CPP) -c MyAlgorithm.cpp -o MyAlgorithm.o $(CXXFLAGS)
+
+bench.o: bench.cpp
+	$(CPP) -c bench.cpp -o bench.o $(CXXFLAGS)
