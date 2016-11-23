@@ -4,6 +4,8 @@ Solution::Solution (const Problem& pbm) : _solution{pbm.dimension()}, _current_f
 	initialize();
 }
 
+Solution::Solution (const Solution& sol) : _solution{sol._solution}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {}
+
 Solution::~Solution() {}
 
 std::ostream& operator<< (std::ostream& os, const Solution& sol) {
@@ -20,11 +22,18 @@ const Problem& Solution::pbm() const {
 	return _pbm;
 }
 
-Solution& Solution::operator= (const Solution& sol) {}
+Solution& Solution::operator= (const Solution& sol) {
+	_solution = sol._solution;
+	_current_fitness = sol._current_fitness;
+}
 
-bool Solution::operator== (const Solution& sol) const {}
+bool Solution::operator== (const Solution& sol) const {
+	return _solution == sol._solution && _current_fitness == sol._current_fitness && _pbm == sol._pbm;
+}
 
-bool Solution::operator!= (const Solution& sol) const {}
+bool Solution::operator!= (const Solution& sol) const {
+	return !(*this == sol);
+}
 
 void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {

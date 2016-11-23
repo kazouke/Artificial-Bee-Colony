@@ -8,6 +8,10 @@ Problem::Problem(double lowLim, double upLim, int dim, Fonction f):
 {
 }
 
+bool Problem::operator== (const Problem& pbm) const {
+	return _lowerLimit == pbm._lowerLimit && _upperLimit == pbm._upperLimit && _dimension == pbm._dimension;
+}
+
 std::ostream& operator<<(std::ostream& os, const Problem& pbm)
 {
     os << pbm._lowerLimit << " " << pbm._upperLimit << " " << pbm._dimension;
