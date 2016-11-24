@@ -39,13 +39,13 @@ void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
 		double r = 1.0*rand() / (RAND_MAX+1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
-		std::cout << "Qualité : "<<_solution[i] << std::endl;
+		//std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
 }
 
 double Solution::fitness() {
 	_current_fitness=(_pbm.f())(_solution);
-	std::cout <<"Fitness : " <<_current_fitness << std::endl;
+	//std::cout <<"Fitness : " <<_current_fitness << std::endl;
     return _current_fitness;
 }
 
