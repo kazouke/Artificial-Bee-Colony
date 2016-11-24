@@ -79,45 +79,18 @@ void ABC::initialize() //renouvelle les solutions
 	//Revoir
 }*/
 
-const vector<Solution*>& ABC::solutions() const
-{
-	return d_solutions;
-}
+const vector<Solution*>& ABC::solutions() const	{return d_solutions;}
 
-int ABC::upper_cost() const
-{
-	return d_upperCost;
-}
+Solution& ABC::solution(const int index) const	{return *(d_solutions[index]);}
 
-int ABC::lower_cost() const
-{
-	return d_lowerCost;
-}
+vector<struct particle>&  ABC::fitness_values()	{return d_fitnessValues;}
 
-Solution& ABC::solution(const int index) const
-{
-	return *(d_solutions[index]);
-}
+double ABC::fitness(const int index) const	{return d_fitnessValues[index].fitness;}
 
-vector<struct particle>&  ABC::fitness_values()
-{
-	return d_fitnessValues;
-}
-
-double ABC::fitness(const int index) const
-{
-	return d_fitnessValues[index].fitness;
-}
-
-double ABC::best_cost() const
-{
-	return d_solutions[d_lowerCost]->fitness();
-}
-
-double ABC::worst_cost() const
-{
-	return d_solutions[d_upperCost]->fitness();
-}
+double ABC::best_cost() const	{return d_fitnessValues[0].fitness;}
+double ABC::worst_cost() const	{return d_fitnessValues.back().fitness;}
+int ABC::upper_cost() const		{return d_upperCost;}
+int ABC::lower_cost() const		{return d_lowerCost;}
 
 /*Solution& ABC::best_solution() const
 {

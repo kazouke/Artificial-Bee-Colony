@@ -47,8 +47,8 @@ class ABC
 //X		Solution& worst_solution() const;															//	-	
 
 //X		void evolution();																			//	-	En attente des autres
-		void trier();	
-		void launch();																			//	OK	QuickSort
+		void trier();																				//	OK	QuickSort
+		void launch();																				//	OK	
 		
 
 	private:
