@@ -111,12 +111,12 @@ double ABC::fitness(const int index) const
 
 double ABC::best_cost() const
 {
-	return d_solutions[d_lowerCost]->get_fitness();
+	return d_solutions[d_lowerCost]->fitness();
 }
 
 double ABC::worst_cost() const
 {
-	return d_solutions[d_upperCost]->get_fitness();
+	return d_solutions[d_upperCost]->fitness();
 }
 
 /*Solution& ABC::best_solution() const

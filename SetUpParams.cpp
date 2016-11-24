@@ -8,7 +8,7 @@ SetUpParams::SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize) :
     _solution_size{solSize}
 {}
 
-/*
+
 //Surcharges
 std::ostream& operator<<(std::ostream& os, const SetUpParams& setup)
 {
@@ -20,7 +20,7 @@ std::istream& operator>>(std::istream& is, SetUpParams& setup)
     is >> setup._independent_runs >> setup._nb_evolution_steps >> setup._population_size >> setup._solution_size;
     return is;
 }
-*/
+
 //Getters
 const unsigned int SetUpParams::independent_runs() const
 {

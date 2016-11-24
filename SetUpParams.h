@@ -17,10 +17,10 @@ class SetUpParams
 		SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
 		~SetUpParams()=default;
 		
-		/*
+		
 		friend std::ostream& operator<< (std::ostream& os, const SetUpParams& setup);
 		friend std::istream& operator>> (std::istream& is, SetUpParams& setup);
-		*/
+		
 		const unsigned int   independent_runs() const;
 		const unsigned int   nb_evolution_steps() const;
 		const unsigned int   population_size() const;
