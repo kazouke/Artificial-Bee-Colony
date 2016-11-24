@@ -140,9 +140,9 @@ Solution& ABC::worst_solution() const
 
 void ABC::trier()
 {
-	QuickSort(0,d_fitnessValues.size()-1);
+	QuickSort(0,d_fitnessValues.size());
 	d_lowerCost=0;
-	d_upperCost=d_fitnessValues.size()-1;
+	d_upperCost=d_fitnessValues.size();
 }
 
 int ABC::partition(int gauche, int droite)
@@ -191,3 +191,16 @@ int ABC::imin(int i) const
 }
 
 */
+
+void ABC::launch()
+{
+	//Fonction utilisée pour les tests mais qui sera la boucle principale
+	
+	std::cout << "Tableau des fitness trie : " << std::endl;
+	trier();
+	for(int i=0; i < d_fitnessValues.size();i++)
+	{
+		std::cout << "Valeur " << i+1 <<" : fitness  : " << d_fitnessValues[i].fitness << " a la case " << d_fitnessValues[i].index << std::endl;
+	}
+	
+}
