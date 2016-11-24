@@ -84,6 +84,18 @@ void ABC::evaluate()
 	//Revoir
 }
 
+void ABC::CalculateProbabilities() const
+{
+	/*for (int i=0; i<d_setup.population_size();++i)
+	{
+		double maxfitt=d_solutions[i].position(0);
+		for (int j=1;j<d_setup.solution_size();j++)
+		{
+			if d_solutions.position(0)//prob[i]=(0.9*(fitness[i]/maxfit))+0.1;
+		}
+	}*/
+}
+
 //-------------------Fonction de Tri-----------------------------
 
 void ABC::trier()

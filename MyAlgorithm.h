@@ -47,10 +47,10 @@ class ABC
 
 		void evolution();																			//	-	En attente d'évolution
 		void trier();																				//	OK	QuickSort
-		
+		void CalculateProbabilities() const;
 
 	private:
-		vector<Solution*> 		d_solutions;     													//		individuals in population
+		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size
 		vector<struct particle> d_fitnessValues;													//		
 		const SetUpParams& 		d_setup;															//		
 		int 					d_upperCost,d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont triées

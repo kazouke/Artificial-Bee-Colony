@@ -15,10 +15,11 @@ int main(int argc, char** argv) {
 	srand(time(0));
 	
 	Problem P(10, 100, 30, F);
+	//SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
 	SetUpParams sup{30, 3000, 30, 30};
 	
 	ABC A{P,sup};
 	A.evolution();
-	
+	//Revoir Banch manquants ?
 	return 0;
 }
