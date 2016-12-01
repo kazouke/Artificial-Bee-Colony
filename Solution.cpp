@@ -1,6 +1,7 @@
 #include "Solution.h"
 
-Solution::Solution (const Problem& pbm) : _solution{pbm.dimension()}, _current_fitness{INT_MAX}, _pbm{pbm} {
+Solution::Solution (const Problem& pbm) : _solution{}, _current_fitness{INT_MAX}, _pbm{pbm} {
+	_solution.resize(pbm.dimension());
 	initialize();
 }
 
