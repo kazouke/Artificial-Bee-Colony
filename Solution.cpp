@@ -64,3 +64,11 @@ double& Solution::position(const int index) {
 void Solution::position(const int index, const double value) {
 	_solution[index] = value;
 }
+
+double Solution::maxSol() const {
+	double max = _solution[0];
+	for(int i = 1; i < _solution.size(); i++)
+		if(_solution[i] > max)
+			max = _solution[i];
+	return max;
+}
