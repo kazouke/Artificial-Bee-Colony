@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
 	srand(time(0));
 	
 	Problem P(10, 100, 30, F);
-	//SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
-	SetUpParams sup{30, 3000, 30, 30};
+	//SetUpParams(int nbRuns 30, int nbEvoSteps 3000, int popSize 30, int solSize 30);
+	SetUpParams sup{1, 1, 30, 30};
 	
 	ABC A{P,sup};
 	A.evolution();
