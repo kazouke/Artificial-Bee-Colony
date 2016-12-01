@@ -13,7 +13,7 @@ Fonction F=somme_rastrigin;
 
 int main(int argc, char** argv) {
 	srand(time(0));
-	
+	//Problem(double lowLim, double upLim, int dim, Fonction f);
 	Problem P(10, 100, 30, F);
 	//SetUpParams(int nbRuns 30, int nbEvoSteps 3000, int popSize 30, int solSize 30);
 	SetUpParams sup{1, 1, 30, 30};
@@ -21,5 +21,5 @@ int main(int argc, char** argv) {
 	ABC A{P,sup};
 	A.evolution();
 	//Revoir Banch manquants ?
-	return 0;
+	
 }

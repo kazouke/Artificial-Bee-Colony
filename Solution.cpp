@@ -57,7 +57,7 @@ std::vector<double>& Solution::solution() {
 	return _solution;
 }
 
-double Solution::position(const int index) {
+double Solution::position(const int index) const{
 	return _solution[index];
 }
 

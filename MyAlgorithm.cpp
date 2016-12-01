@@ -1,14 +1,22 @@
 #include "MyAlgorithm.h"
 
+using std::cout;
+using std::setw;
+using std::endl;
+
 //-------------------Constructeur / Destructeur --------------------------------
 
 ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions(), d_fitnessValues(), d_setup(setup), d_upperCost(), d_lowerCost()
 {
 	d_solutions.resize(d_setup.population_size());
 	d_fitnessValues.resize(d_setup.population_size());
+	cout<<"Creation de l'ABC : "<<endl;
+	cout<<"Probleme "<<pbm<<endl;
+
 	for(int i=0;i<d_setup.population_size();++i)
 	{
 		d_solutions[i]=new Solution{pbm}; //le tableau solution
+		//std::cout<<"Initialisation de la d_solutions "<<std::setw(2)<<i<<" avec une taille "<<d_solutions[i]->size()<<endl;
         d_fitnessValues[i]=particle {.index=i,.fitness=d_solutions[i]->fitness()}; //index et fitness du tableau
 	}
 	trier();
@@ -78,45 +86,42 @@ void ABC::evaluate()
 {
 	trier();
     int m=d_solutions.size()/2;
-    for (int i = 0; i < m; ++i)
+    //for (int i = 0; i < m; ++i)
     {
         //delete d_solutions[i+m];
         //d_solutions[i+m]=new Solution(*d_solutions[i]);
     }
     d_upperCost = d_fitnessValues.size()-1;
     d_lowerCost = 0;
-    CalculateProbabilities();
+    //CalculateProbabilities();
 	//Revoir
 }
 
 std::vector <int> ABC::CalculateProbabilities() const
 {
-	//std::vector <int> t;
-	//t.resize(d_setup.population_size());
+	std::vector <int> t;
+	t.resize(d_setup.population_size());
 	
 	for (int i=0; i<d_setup.population_size(); ++i)
 	{
-		//double maxsol=d_solutions[i]->maxSol();
+		double maxsol=d_solutions[i]->maxSol();
+		std::cout<<"Abeille "<<std::setw(3)<<i<<" avec le max "<<maxsol<<std::endl;
 		
-		for (int j=0; j<d_setup.solution_size(); ++j) std::cout<<j<<'\t'<<d_solutions[i]->position(j)<< std::endl;
-		//<<(0.9 * (d_solutions[i]->position(j)/maxsol))+0.1<<" valeur "<<d_solutions[i]->position(j)<<" / "<<maxsol<<std::endl;
-		/*
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
+			std::cout<<'\t'<<"Regarde a la position "<<std::setw(3)<<j<<'\t'<<d_solutions[i]->position(j);
 			double r = rand()%1000/1000.0;
 			if (r<0.9 * d_solutions[i]->position(j)/maxsol+0.1)
 			{
 				t[i]=j;
-				std::cout<< "Position     choisie "<<j<<" car "<<r<<'\t'<<'<'<<'\t'<<0.9 * d_solutions[i]->position(j)/maxsol+0.1<<std::endl;
+				std::cout<< " et la choisi"<<std::endl;
 				//j=d_setup.solution_size();
 			}
-			else std::cout<<"Position non choisie "<<j<<" car "<<r<<'\t'<<'>'<<'\t'<<0.9 * d_solutions[i]->position(j)/maxsol+0.1<<std::endl;
+			else std::cout<<" et la choisi pas"<<std::endl;
 		}
 		std::cout<<"La meilleur sol est : "<<maxsol<<std::endl;
-		
-		*/
 	}
-	//return t;
+	return t;
 }
 
 //-------------------Fonction de Tri-----------------------------
