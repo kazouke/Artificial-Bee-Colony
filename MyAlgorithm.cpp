@@ -84,8 +84,25 @@ void ABC::evaluate()
 	//Revoir
 }
 
-void ABC::CalculateProbabilities() const
+std::vector <int> ABC::CalculateProbabilities() const
 {
+	std::vector <int> t;
+	t.resize(d_setup.population_size()-1);
+	
+	for (int i=0; i<d_setup.population_size(); ++i)
+	{
+		double maxsol=d_solutions->max();
+		for (int j=0; j<d_setup.solution_size(); ++j)
+		{
+			double r = rand()%1000/1000.0;
+			if (r<0.9 * d_solutions[i]->position(j)/maxsol+0.1)
+			{
+				t[i]=j;
+				j=d_setup.solution_size();
+			}
+		}
+	}
+	return t;
 	/*for (int i=0; i<d_setup.population_size();++i)
 	{
 		double maxfitt=d_solutions[i].position(0);

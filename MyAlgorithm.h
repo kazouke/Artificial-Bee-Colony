@@ -47,7 +47,7 @@ class ABC
 
 		void evolution();																			//	-	En attente d'évolution
 		void trier();																				//	OK	QuickSort
-		void CalculateProbabilities() const;
+		std::vector <int> CalculateProbabilities() const;
 
 	private:
 		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size
