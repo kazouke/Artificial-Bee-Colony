@@ -25,6 +25,7 @@ class Solution
 		double fitness();
 
 		unsigned int size() const;
+		double maxSol() const;
 
 		std::vector<double>& solution();
 
