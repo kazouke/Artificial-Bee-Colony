@@ -55,7 +55,11 @@ void ABC::evolution()
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
-		//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
+		for (int j=0;j<d_setup.nb_evolution_steps();++j)
+		{
+			evaluate();
+			//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
+		}
 		std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setw(8)<<best_cost()<< " pire solution : "<<std::setw(8)<<worst_cost()<<std::endl;
 	}
 }
@@ -76,41 +80,43 @@ void ABC::evaluate()
     int m=d_solutions.size()/2;
     for (int i = 0; i < m; ++i)
     {
-        delete d_solutions[i+m];
-        d_solutions[i+m]=new Solution(*d_solutions[i]);
+        //delete d_solutions[i+m];
+        //d_solutions[i+m]=new Solution(*d_solutions[i]);
     }
     d_upperCost = d_fitnessValues.size()-1;
     d_lowerCost = 0;
+    CalculateProbabilities();
 	//Revoir
 }
 
 std::vector <int> ABC::CalculateProbabilities() const
 {
-	std::vector <int> t;
-	t.resize(d_setup.population_size()-1);
+	//std::vector <int> t;
+	//t.resize(d_setup.population_size());
 	
 	for (int i=0; i<d_setup.population_size(); ++i)
 	{
-		double maxsol=d_solutions->max();
+		//double maxsol=d_solutions[i]->maxSol();
+		
+		for (int j=0; j<d_setup.solution_size(); ++j) std::cout<<j<<'\t'<<d_solutions[i]->position(j)<< std::endl;
+		//<<(0.9 * (d_solutions[i]->position(j)/maxsol))+0.1<<" valeur "<<d_solutions[i]->position(j)<<" / "<<maxsol<<std::endl;
+		/*
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
 			double r = rand()%1000/1000.0;
 			if (r<0.9 * d_solutions[i]->position(j)/maxsol+0.1)
 			{
 				t[i]=j;
-				j=d_setup.solution_size();
+				std::cout<< "Position     choisie "<<j<<" car "<<r<<'\t'<<'<'<<'\t'<<0.9 * d_solutions[i]->position(j)/maxsol+0.1<<std::endl;
+				//j=d_setup.solution_size();
 			}
+			else std::cout<<"Position non choisie "<<j<<" car "<<r<<'\t'<<'>'<<'\t'<<0.9 * d_solutions[i]->position(j)/maxsol+0.1<<std::endl;
 		}
+		std::cout<<"La meilleur sol est : "<<maxsol<<std::endl;
+		
+		*/
 	}
-	return t;
-	/*for (int i=0; i<d_setup.population_size();++i)
-	{
-		double maxfitt=d_solutions[i].position(0);
-		for (int j=1;j<d_setup.solution_size();j++)
-		{
-			if d_solutions.position(0)//prob[i]=(0.9*(fitness[i]/maxfit))+0.1;
-		}
-	}*/
+	//return t;
 }
 
 //-------------------Fonction de Tri-----------------------------
