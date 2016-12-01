@@ -15,6 +15,7 @@ namespace InterfaceABC {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
+		void CreerSetUp(int nbRuns, int nbEvoSteps, int popSize, int solSize);
 		MyForm(void)
 		{
 			InitializeComponent();
@@ -51,6 +52,8 @@ namespace InterfaceABC {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Label^  label8;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown4;
 
 	protected:
 
@@ -83,10 +86,13 @@ namespace InterfaceABC {
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown4 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -239,11 +245,30 @@ namespace InterfaceABC {
 			this->label7->TabIndex = 4;
 			this->label7->Text = L"Results";
 			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(23, 257);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(68, 13);
+			this->label8->TabIndex = 5;
+			this->label8->Text = L"Solution Size";
+			// 
+			// numericUpDown4
+			// 
+			this->numericUpDown4->Location = System::Drawing::Point(133, 255);
+			this->numericUpDown4->Name = L"numericUpDown4";
+			this->numericUpDown4->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown4->TabIndex = 6;
+			this->numericUpDown4->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 30, 0, 0, 0 });
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(623, 305);
+			this->Controls->Add(this->numericUpDown4);
+			this->Controls->Add(this->label8);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->groupBox1);
@@ -254,6 +279,7 @@ namespace InterfaceABC {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -264,6 +290,7 @@ namespace InterfaceABC {
 
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	CreerSetUp((int)numericUpDown3->Value, (int)numericUpDown2->Value, (int)numericUpDown1->Value, (int)numericUpDown4->Value);
 }
 };
 }

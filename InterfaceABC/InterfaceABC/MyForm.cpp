@@ -10,6 +10,12 @@
 using namespace System;
 using namespace System::Windows::Forms;
 
+void InterfaceABC::MyForm::CreerSetUp(int nbRuns, int nbEvoSteps, int popSize, int solSize) {
+	SetUpParams sup{ nbRuns, nbEvoSteps, popSize, solSize };
+	printf(sup.independent_runs);
+	textBox3->Text = "lol";
+}
+
 [STAThread]//leave this as is
 void main(array<String^>^ args) {
 	Application::EnableVisualStyles();
