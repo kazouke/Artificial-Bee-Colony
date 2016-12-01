@@ -14,7 +14,7 @@ bool Problem::operator== (const Problem& pbm) const {
 
 std::ostream& operator<<(std::ostream& os, const Problem& pbm)
 {
-    os <<"Limit bas "<< pbm._lowerLimit << " Limit haut " << pbm._upperLimit << " dimension " << pbm._dimension;
+    os <<"Problem : limit low "<< pbm._lowerLimit << " high " << pbm._upperLimit << " dim " << pbm._dimension;
     return os;
 }
 std::istream& operator>>(std::istream& is, Problem& pbm)

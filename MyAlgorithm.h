@@ -47,12 +47,14 @@ class ABC
 
 		void evolution();																			//	-	En attente d'évolution
 		void trier();																				//	OK	QuickSort
+		
+		void sendEmployedBees();
 		std::vector <int> CalculateProbabilities() const;
 
 	private:
 		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size
 		vector<struct particle> d_fitnessValues;													//		
-		const SetUpParams& 		d_setup;															//		
+		const SetUpParams 		d_setup;															//		
 		int 					d_upperCost,d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont triées
 		
 		int partition(int gauche, int droite);														//	OK	QuickSort

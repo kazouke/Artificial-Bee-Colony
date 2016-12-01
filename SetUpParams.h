@@ -15,6 +15,7 @@ class SetUpParams
 	public:
 		SetUpParams()=delete;
 		SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
+		SetUpParams(const SetUpParams & setup);
 		~SetUpParams()=default;
 		
 		
