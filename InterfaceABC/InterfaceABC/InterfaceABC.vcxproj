@@ -78,12 +78,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bench.cpp" />
+    <ClCompile Include="MyAlgorithm.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="Problem.cpp" />
+    <ClCompile Include="SetUpParams.cpp" />
+    <ClCompile Include="Solution.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bench.h" />
+    <ClInclude Include="MyAlgorithm.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Problem.h" />
+    <ClInclude Include="SetUpParams.h" />
+    <ClInclude Include="Solution.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">

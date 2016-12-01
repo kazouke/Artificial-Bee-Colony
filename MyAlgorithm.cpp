@@ -17,7 +17,7 @@ ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions(), d_fitnessVa
 	{
 		d_solutions[i]=new Solution{pbm}; //le tableau solution
 		//std::cout<<"Initialisation de la d_solutions "<<std::setw(2)<<i<<" avec une taille "<<d_solutions[i]->size()<<endl;
-        d_fitnessValues[i]=particle {.index=i,.fitness=d_solutions[i]->fitness()}; //index et fitness du tableau
+        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()}; //index et fitness du tableau
 	}
 	trier();
 }
@@ -77,7 +77,7 @@ void ABC::initialize()
 	for(int i=0;i<d_solutions.size();++i)
     {
         d_solutions[i]->initialize();
-        d_fitnessValues[i]=particle {.index=i,.fitness=d_solutions[i]->fitness()};
+        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
     }
     trier();
 }

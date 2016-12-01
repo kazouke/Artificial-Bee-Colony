@@ -5,7 +5,9 @@ Solution::Solution (const Problem& pbm) : _solution{}, _current_fitness{INT_MAX}
 	initialize();
 }
 
-Solution::Solution (const Solution& sol) : _solution{sol._solution}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {}
+Solution::Solution (const Solution& sol) : _solution{}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {
+	_solution = sol._solution;
+}
 
 Solution::~Solution() {}
 
@@ -26,6 +28,7 @@ const Problem& Solution::pbm() const {
 Solution& Solution::operator= (const Solution& sol) {
 	_solution = sol._solution;
 	_current_fitness = sol._current_fitness;
+	return *(this);
 }
 
 bool Solution::operator== (const Solution& sol) const {

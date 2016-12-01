@@ -69,24 +69,24 @@ namespace InterfaceABC {
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -121,78 +121,21 @@ namespace InterfaceABC {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Control Parameters";
 			// 
-			// numericUpDown1
+			// comboBox1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(116, 19);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(53, 20);
-			this->numericUpDown1->TabIndex = 0;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(9, 173);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(160, 21);
+			this->comboBox1->TabIndex = 10;
 			// 
-			// label1
+			// numericUpDown3
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(6, 21);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(79, 13);
-			this->label1->TabIndex = 1;
-			this->label1->Text = L"# of Population";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(6, 47);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(55, 13);
-			this->label2->TabIndex = 2;
-			this->label2->Text = L"# of Cycle";
-			// 
-			// numericUpDown2
-			// 
-			this->numericUpDown2->Location = System::Drawing::Point(116, 45);
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(53, 20);
-			this->numericUpDown2->TabIndex = 3;
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(6, 73);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(70, 13);
-			this->label3->TabIndex = 4;
-			this->label3->Text = L"Limit=CS*D*5";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(6, 91);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(28, 13);
-			this->label4->TabIndex = 5;
-			this->label4->Text = L"SPP";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(116, 84);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(53, 20);
-			this->textBox1->TabIndex = 6;
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(6, 114);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(90, 13);
-			this->label5->TabIndex = 7;
-			this->label5->Text = L"Perturbation Rate";
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(116, 111);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(53, 20);
-			this->textBox2->TabIndex = 8;
+			this->numericUpDown3->Location = System::Drawing::Point(116, 140);
+			this->numericUpDown3->Name = L"numericUpDown3";
+			this->numericUpDown3->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown3->TabIndex = 9;
+			this->numericUpDown3->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 50, 0, 0, 0 });
 			// 
 			// label6
 			// 
@@ -203,20 +146,81 @@ namespace InterfaceABC {
 			this->label6->TabIndex = 3;
 			this->label6->Text = L"# of Runs";
 			// 
-			// numericUpDown3
+			// textBox2
 			// 
-			this->numericUpDown3->Location = System::Drawing::Point(116, 140);
-			this->numericUpDown3->Name = L"numericUpDown3";
-			this->numericUpDown3->Size = System::Drawing::Size(53, 20);
-			this->numericUpDown3->TabIndex = 9;
+			this->textBox2->Location = System::Drawing::Point(116, 111);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(53, 20);
+			this->textBox2->TabIndex = 8;
 			// 
-			// comboBox1
+			// label5
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(9, 173);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(160, 21);
-			this->comboBox1->TabIndex = 10;
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(6, 114);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(90, 13);
+			this->label5->TabIndex = 7;
+			this->label5->Text = L"Perturbation Rate";
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(116, 84);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(53, 20);
+			this->textBox1->TabIndex = 6;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(6, 91);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(28, 13);
+			this->label4->TabIndex = 5;
+			this->label4->Text = L"SPP";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(6, 73);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(70, 13);
+			this->label3->TabIndex = 4;
+			this->label3->Text = L"Limit=CS*D*5";
+			// 
+			// numericUpDown2
+			// 
+			this->numericUpDown2->Location = System::Drawing::Point(116, 45);
+			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			this->numericUpDown2->Name = L"numericUpDown2";
+			this->numericUpDown2->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown2->TabIndex = 3;
+			this->numericUpDown2->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(6, 47);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(55, 13);
+			this->label2->TabIndex = 2;
+			this->label2->Text = L"# of Cycle";
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(6, 21);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(79, 13);
+			this->label1->TabIndex = 1;
+			this->label1->Text = L"# of Population";
+			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(116, 19);
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown1->TabIndex = 0;
+			this->numericUpDown1->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 30, 0, 0, 0 });
 			// 
 			// textBox3
 			// 
@@ -247,9 +251,9 @@ namespace InterfaceABC {
 			this->Text = L"Arificial Bee Colony Algorithm for Constrained Optimization Problems";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

@@ -1,7 +1,6 @@
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include "bench.h"
-
-const float PI{3.14159265359};
 
 double rosenbrock(const vector<double> &individu, int d)
 {
