@@ -1,13 +1,16 @@
-﻿La génération a démarré 01/12/2016 12:14:09.
-     1>Projet "C:\InterfaceABC\InterfaceABC\InterfaceABC.vcxproj" sur le nœud 2 (Build cible(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib MyForm.cpp
-         MyForm.cpp
-     1>MyForm.cpp(15): error C3867: &'SetUpParams::independent_runs' : liste d'arguments manquante dans l'appel de fonction ; utilisez 'SetUpParams::independent_runs' pour créer un pointeur vers membre
-     1>MyForm.cpp(20): warning C4829: Paramètres potentiellement incorrects dans la fonction main. Utilisez 'int main(Platform::Array<Platform::String^>^ argv)' à la place
-     1>MyForm.cpp(24): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
-     1>Génération du projet "C:\InterfaceABC\InterfaceABC\InterfaceABC.vcxproj" terminée (Build cible(s)) -- ÉCHEC.
+﻿La génération a démarré 02/12/2016 08:37:40.
+     1>Projet "U:\L3-IA\Artificial-Bee-Colony\InterfaceABC\InterfaceABC\InterfaceABC.vcxproj" sur le nœud 2 (Build cible(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"U:\L3-IA\Artificial-Bee-Colony\InterfaceABC\Debug\InterfaceABC.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\InterfaceABC.MyForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"U:\L3-IA\Artificial-Bee-Colony\InterfaceABC\Debug\InterfaceABC.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\bench.obj
+         Debug\MyAlgorithm.obj
+         Debug\MyForm.obj
+         Debug\Problem.obj
+         Debug\SetUpParams.obj
+         Debug\Solution.obj
+         "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
+         InterfaceABC.vcxproj -> U:\L3-IA\Artificial-Bee-Colony\InterfaceABC\Debug\InterfaceABC.exe
+     1>Génération du projet "U:\L3-IA\Artificial-Bee-Colony\InterfaceABC\InterfaceABC\InterfaceABC.vcxproj" terminée (Build cible(s)).
 
-ÉCHEC de la build.
+La génération a réussi.
 
-Temps écoulé 00:00:00.40
+Temps écoulé 00:00:01.01
