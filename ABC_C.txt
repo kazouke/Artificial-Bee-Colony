@@ -293,6 +293,7 @@ if(trial[maxtrialindex]>=limit)
 {
 	init(maxtrialindex);
 }
+		//La pire des abeilles est réinitialisée
 }
 
 
