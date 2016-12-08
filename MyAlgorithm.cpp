@@ -241,6 +241,18 @@ std::vector <int> ABC::CalculateProbabilities() const // A FINIR
 	return probabilite;
 }
 
+void ABC::sendScoutBees()
+{
+	for (int i=0;i<d_setup.population_size();i++)
+	{
+		if (d_solutions[i].d_trial > MAX_TRIAL)
+		{
+			d_solutions[i].initialize();
+			d_solutions[i].d_trial = 0;
+		}
+	}
+}
+
 //-------------------Fonction de Tri-----------------------------
 
 void ABC::trier()
