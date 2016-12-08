@@ -27,7 +27,6 @@ class ABC
 		ABC(const Problem& pbm,const SetUpParams& setup); 											//	OK
 		~ABC();																						//	OK
 
-		friend 	ostream& operator<< (ostream& os, const ABC& myAlgo);								//	OK	A voir si utile
 		const SetUpParams& setup() const;															//	OK	retourne les paramètres
 		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associée et les tri croissant par fitness
 
@@ -52,6 +51,8 @@ class ABC
 		std::vector <int> CalculateProbabilities() const;
 		void SendOnLookerBees(std::vector <int> probabilite);
 		void sendScoutBees();
+		
+		void Propre(int param2change,int i);
 
 	private:
 		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size

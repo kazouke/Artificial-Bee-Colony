@@ -15,40 +15,18 @@ ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions{}, d_fitnessVa
 {
 	d_solutions.resize(d_setup.population_size());
 	d_fitnessValues.resize(d_setup.population_size());
-	if (TEST_LEVEL>=2) cout<<"--------------Initialisation----------------"<<endl;
-	if (TEST_LEVEL>=2) cout<<"Creation de l'ABC : "<<endl;
-	if (TEST_LEVEL>=2) cout<<pbm<<endl;
-	if (TEST_LEVEL>=2) cout<<d_setup<<endl;
+	if (TEST_LEVEL>=2) cout<<"--------------Initialisation----------------"<<endl<<"Creation de l'ABC : "<<endl<<pbm<<endl<<d_setup<<endl;
 	
 	for(int i=0;i<d_setup.population_size();++i)
 	{
-		d_solutions[i]=new Solution{pbm}; //le tableau solution
-		//std::cout<<"Initialisation de la d_solutions "<<std::setw(2)<<i<<" avec une taille "<<d_solutions[i]->size()<<endl;
-        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()}; //index et fitness du tableau
+		d_solutions[i]=new Solution{pbm};
+        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
 	}
 	trier();
 	if (TEST_LEVEL>=2) cout<<"------------Fin Initialisation--------------"<<endl;
 }
 
-ABC::~ABC()
-{
-	for(int i=0;i<d_solutions.size();++i)
-	{
-		delete d_solutions[i];
-	}
-}
-
-//--------------------------Surcharge-----------------------------
-
-std::ostream& operator<<(std::ostream& os, const ABC& myAlgo)
-{
-    for(int i{} ; i < myAlgo.d_solutions.size() ; ++i)
-        os << *(myAlgo.d_solutions[i]) << "\n";
-    for(int i{} ; i < myAlgo.d_fitnessValues.size() ; ++i)
-        os << myAlgo.d_fitnessValues[i].index << " : " << myAlgo.d_fitnessValues[i].fitness << "\n";
-    os << myAlgo.d_setup << "\n" << myAlgo.d_upperCost << " " << myAlgo.d_lowerCost;
-    return os;
-}
+ABC::~ABC() {for(int i=0;i<d_solutions.size();++i){delete d_solutions[i];}}
 
 //-----------------Get----------------------------------------
 
@@ -68,28 +46,23 @@ const SetUpParams& ABC::setup() const	{return d_setup;}
 
 double ABC::evolution()
 {
-	double moyennem=0,moyennep=0;
+	double moyenne=0;
 	double meilleur=INT_MAX;
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
 		for (int j=0;j<d_setup.nb_evolution_steps() && best_cost()>0;++j)
 		{
-    		trier();
     		sendEmployedBees();
-			trier();
     		SendOnLookerBees(CalculateProbabilities());
-    		trier();
     		sendScoutBees();
 			//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
 		}
-		trier();
-		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setw(8)<<best_cost()<< " pire solution : "<<std::setw(8)<<worst_cost()<<std::endl;
-		moyennem+=best_cost()/d_setup.independent_runs();
-		moyennep+=worst_cost()/d_setup.independent_runs();
+		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setw(8)<<best_cost()<<std::endl;
+		moyenne+=best_cost()/d_setup.independent_runs();
 		if (meilleur>best_cost()) meilleur=best_cost();
 	}
-	cout<<"Moyenne = \t\t\t"<<std::setw(13)<<moyennem<<"\t\t"<<std::setw(14)<<moyennep<<endl;
+	cout<<"Moyenne = \t\t\t"<<std::setw(13)<<moyenne<<endl;
 	return meilleur;
 }
 
@@ -106,54 +79,56 @@ void ABC::initialize()
     if (TEST_LEVEL>=2) cout<<"--------------Fin Initialize----------------"<<endl;
 }
 
+void ABC::Propre(int param2change,int i)
+{
+	Solution* newsol= new Solution{*d_solutions[i]};
+	
+	int neighbour=random*(d_setup.population_size()-1);
+	while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
+	if (TEST_LEVEL>=2) cout<<"On regarde l'abeille "<<i+1<<" on choisit sa source "<<param2change+1<<endl<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;
+	
+    newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random-0.5)*2);
+        
+    double lb= newsol->pbm().lowerLimit();
+    double ub= newsol->pbm().upperLimit();
+	if (newsol->position(param2change)<lb) newsol->position(param2change, lb);
+	if (newsol->position(param2change)>ub) newsol->position(param2change, ub);
+	
+	double FitnessSol=newsol->fitness();
+       
+    if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl<<"\t\tFitness nouvelle solution "<<FitnessSol<<endl;
+        
+    //a greedy selection is applied between the current solution i and its mutant
+	if (FitnessSol<d_fitnessValues[i].fitness)
+	{
+		//If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
+		delete d_solutions[i];
+	    d_solutions[i]=newsol;
+	    newsol=nullptr;
+	        
+	    d_fitnessValues[i].fitness=FitnessSol;
+	    if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est << meilleure >> !"<<endl;
+	}
+    else
+	{
+	   	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
+		//if the solution i can not be improved, increase its trial counter
+	    d_solutions[i]->incrementerTrial();
+	}
+	delete newsol;
+}
+
 void ABC::sendEmployedBees()
 {
 	if (TEST_LEVEL>=2) cout<<"----------------SendEmployedBees-----------------"<<endl;
 	for (int i=0;i<d_setup.population_size();i++)
 	{
-		if (TEST_LEVEL>=2) cout<<"On regarde l'abeille "<<i+1;
-		Solution* newsol= new Solution{*d_solutions[i]};
-        /*The parameter to be changed is determined randomly*/
+		//On change un parametre de maniere completement aleatoire
         int param2change=random*(d_setup.solution_size()-1);
-        if (TEST_LEVEL>=2) cout<<" on choisit sa source "<<param2change+1<<endl;
-        /*A randomly chosen solution is used in producing a mutant solution of the solution i, different from i*/
-        int neighbour=random*(d_setup.population_size()-1);
-		while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
-		if (TEST_LEVEL>=2) cout<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;
-		
-        newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random-0.5)*2);
-        
-        double lb= newsol->pbm().lowerLimit();
-        double ub= newsol->pbm().upperLimit();
-		if (newsol->position(param2change)<lb) newsol->position(param2change, lb);
-		if (newsol->position(param2change)>ub) newsol->position(param2change, ub);
-		
-		double FitnessSol=newsol->fitness();
-        
-        if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl;
-        if (TEST_LEVEL>=2) cout<<"\t\tFitness nouvelle solution "<<FitnessSol<<endl;
-        
-        //a greedy selection is applied between the current solution i and its mutant
-	    if (FitnessSol<d_fitnessValues[i].fitness)
-	    {
-	        //If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
-			delete d_solutions[i];
-	        d_solutions[i]=newsol;
-	        newsol=nullptr;
-	        
-	        d_fitnessValues[i].fitness=FitnessSol;
-	        if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est << meilleure >> !"<<endl;
-	    }
-        else
-	    {
-	    	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
-			//if the solution i can not be improved, increase its trial counter
-	        d_solutions[i]->incrementerTrial();
-	    }
-		delete newsol;
+        Propre(param2change,i);
     }
-		trier();
-		if (TEST_LEVEL>=2) cout<<"-------------SendEmployedBees FIN----------------"<<endl;
+	trier();
+	if (TEST_LEVEL>=2) cout<<"-------------SendEmployedBees FIN----------------"<<endl;
 }
 
 void ABC::SendOnLookerBees(std::vector <int> probabilite)
@@ -161,53 +136,12 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	if (TEST_LEVEL>=2) cout<<"----------------SendOnLookerBees-----------------"<<endl;
 	for (int i=0;i<d_setup.population_size();i++)
 	{
-		if (TEST_LEVEL>=2) cout<<"On regarde l'abeille "<<i+1;
-		Solution* newsol= new Solution{*d_solutions[i]};
-        /*The parameter to be changed is determined randomly*/
+		//On change un parametre choisi par la fonction CalculateProbabilities
         int param2change=probabilite[i];
-        if (TEST_LEVEL>=2) cout<<" on choisit sa source "<<param2change+1<<endl;
-        /*A randomly chosen solution is used in producing a mutant solution of the solution i, different from i*/
-        int neighbour=random*(d_setup.population_size()-1);
-		while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
-		if (TEST_LEVEL>=2) cout<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;	
-		
-		//On change une source à la place param2change dans newsol avec une nouvelle valeur
-        //Nouvelle valeur = Ancienne + ou - diff * rand
-        newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random-0.5)*2);
-        //if generated parameter value is out of boundaries, it is shifted onto the boundaries
-        double lb= newsol->pbm().lowerLimit();
-        double ub= newsol->pbm().upperLimit();
-		if (newsol->position(param2change)<lb) newsol->position(param2change, lb);
-		if (newsol->position(param2change)>ub) newsol->position(param2change, ub);
-		
-      	/*double ObjValSol=function(*newsol);
-		double FitnessSol=CalculateFitness(ObjValSol);*/
-		double FitnessSol=newsol->fitness();
-        
-        if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl;
-        if (TEST_LEVEL>=2) cout<<"\t\tFitness nouvelle solution "<<FitnessSol<<endl;
-        
-        //a greedy selection is applied between the current solution i and its mutant
-	    if (FitnessSol<d_fitnessValues[i].fitness)
-	    {
-	        //If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
-			delete d_solutions[i];
-	        d_solutions[i]=newsol;
-	        newsol=nullptr;
-	        
-	        d_fitnessValues[i].fitness=FitnessSol;
-	        if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est << meilleure >> !"<<endl;
-	    }
-        else
-	    {
-	    	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
-			//if the solution i can not be improved, increase its trial counter
-	        d_solutions[i]->incrementerTrial();
-	    }
-		delete newsol;
-    }
-		trier();
-		if (TEST_LEVEL>=2) cout<<"-------------SendOnLookerBees FIN----------------"<<endl;
+        Propre(param2change,i);
+	}
+	trier();
+	if (TEST_LEVEL>=2) cout<<"-------------SendOnLookerBees FIN----------------"<<endl;
 }
 
 std::vector <int> ABC::CalculateProbabilities() const // A FINIR
@@ -238,57 +172,37 @@ std::vector <int> ABC::CalculateProbabilities() const // A FINIR
 	return probabilite;
 }
 
-void ABC::sendScoutBees()
+void ABC::sendScoutBees() //Voir opti : Protéger les bonnes sources de la réinitialisation ?
 {
+	/*	ORIGINAL
 	for (int i=0;i<d_setup.population_size();i++)
 	{
 		if (d_solutions[i]->trial() > MAX_TRIAL)
 		{
 			d_solutions[i]->initialize();
 		}
+	}*/
+	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
+	for (int i=d_setup.population_size()/2;i<d_setup.population_size();i++)
+	{
+		if (d_solutions[i]->trial() > MAX_TRIAL)
+		{
+			d_solutions[i]->initialize();
+		}
 	}
+	trier();
 }
 
 //-------------------Fonction de Tri-----------------------------
+//Utilisation du tri QuickSort -> cours Algorithmique récursif
 
-void ABC::trier()
-{
-	QuickSort(0,d_setup.population_size());
-	d_lowerCost=0;
-	d_upperCost=d_setup.population_size()-1;
-	//cout<<"Meilleur = "<<setw(10)<<best_cost()<<endl;
-	//cout<<"Pire     = "<<setw(10)<<worst_cost()<<endl;
-	//for (int i=0;i<d_setup.population_size();i++) cout<<setw(3)<<i<<'\t'<<d_fitnessValues[i].fitness<<endl;
-	
-}
+void ABC::trier(){QuickSort(0,d_setup.population_size());d_lowerCost=0;	d_upperCost=d_setup.population_size()-1;}
 
 int ABC::partition(int gauche, int droite)
-{
-    double x=d_fitnessValues[gauche].fitness;
-    int i=gauche;
-    int j;
+{   double x=d_fitnessValues[gauche].fitness;
+    int i=gauche;int j;
+	for(j=gauche+1; j<droite; j++) if (d_fitnessValues[j].fitness<=x){i=i+1;std::swap(d_fitnessValues[i],d_fitnessValues[j]);}
+	std::swap(d_fitnessValues[i],d_fitnessValues[gauche]);
+    return i;}
 
-    for(j=gauche+1; j<droite; j++)
-    {
-        if (d_fitnessValues[j].fitness<=x)
-        {
-            i=i+1;
-            std::swap(d_fitnessValues[i],d_fitnessValues[j]);
-        }
-
-    }
-
-    std::swap(d_fitnessValues[i],d_fitnessValues[gauche]);
-    return i;
-}
-
-void ABC::QuickSort(int gauche, int droite)
-{
-	int r;
-    if(gauche<droite)
-    {
-        r=partition(gauche,droite);
-        QuickSort(gauche,r);  
-        QuickSort(r+1,droite);
-    }
-}
+void ABC::QuickSort(int gauche, int droite){int r;if(gauche<droite) {r=partition(gauche,droite);QuickSort(gauche,r);QuickSort(r+1,droite);}}

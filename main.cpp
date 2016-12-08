@@ -16,6 +16,7 @@ int main(int argc, char** argv) {
 	//Problem(double lowLim, double upLim, int dim, Fonction f);
 	Problem P(-5.12, 5.12, 30, F);
 	//SetUpParams(int nbRuns 30, int nbEvoSteps 2000000, int popSize 30, int solSize 30);
+	//30,5000,30,30
 	SetUpParams sup{30, 5000, 30, 30};
 	
 	ABC A{P,sup};
@@ -24,3 +25,10 @@ int main(int argc, char** argv) {
 	//Revoir Banch manquants ?
 	
 }
+
+/*
+A FAIRE
+-Revoir les fonctions (manquantes, bug)
+-S'approcher de fitness 0 à 0.001 prêt en moyenne
+-Revoir les proba, proba négative DANGER
+*/
