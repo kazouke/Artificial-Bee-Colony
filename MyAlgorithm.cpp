@@ -7,7 +7,7 @@ using std::setw;
 using std::endl;
 
 #define TEST_LEVEL 1
-#define MAX_TRIAL 5
+#define MAX_TRIAL 100
 
 //-------------------Constructeur / Destructeur --------------------------------
 
@@ -66,9 +66,10 @@ const SetUpParams& ABC::setup() const	{return d_setup;}
 
 //-----------------Boucle---------------------------------------
 
-void ABC::evolution()
+double ABC::evolution()
 {
 	double moyennem=0,moyennep=0;
+	double meilleur=INT_MAX;
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
@@ -86,8 +87,10 @@ void ABC::evolution()
 		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setw(8)<<best_cost()<< " pire solution : "<<std::setw(8)<<worst_cost()<<std::endl;
 		moyennem+=best_cost()/d_setup.independent_runs();
 		moyennep+=worst_cost()/d_setup.independent_runs();
+		if (meilleur>best_cost()) meilleur=best_cost();
 	}
 	cout<<"Moyenne = \t\t\t"<<std::setw(13)<<moyennem<<"\t\t"<<std::setw(14)<<moyennep<<endl;
+	return meilleur;
 }
 
 void ABC::initialize()
@@ -188,18 +191,18 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	    if (FitnessSol<d_fitnessValues[i].fitness)
 	    {
 	        //If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
-	        delete d_solutions[i];
+			delete d_solutions[i];
 	        d_solutions[i]=newsol;
 	        newsol=nullptr;
 	        
 	        d_fitnessValues[i].fitness=FitnessSol;
-	        if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est meilleure !"<<endl;
+	        if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est << meilleure >> !"<<endl;
 	    }
         else
 	    {
 	    	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
 			//if the solution i can not be improved, increase its trial counter
-	       d_solutions[i]->incrementerTrial();
+	        d_solutions[i]->incrementerTrial();
 	    }
 		delete newsol;
     }
@@ -220,7 +223,7 @@ std::vector <int> ABC::CalculateProbabilities() const // A FINIR
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
-			double r = rand()%1001/1000.0;
+			double r = random;
 			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<0.9*d_solutions[i]->position(j)/maxsol+0.1<<' ';
 			if (r<0.9 * d_solutions[i]->position(j)/maxsol+0.1)
 			{

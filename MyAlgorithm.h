@@ -45,7 +45,7 @@ class ABC
 		Solution& best_solution() const;															//	OK	
 		Solution& worst_solution() const;															//	OK	
 
-		void evolution();																			//	-	En attente d'évolution
+		double evolution();																			//	-	En attente d'évolution
 		void trier();																				//	OK	QuickSort
 		
 		void sendEmployedBees();

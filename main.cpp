@@ -14,12 +14,13 @@ Fonction F=somme_sphere;
 int main(int argc, char** argv) {
 	srand(time(0));
 	//Problem(double lowLim, double upLim, int dim, Fonction f);
-	Problem P(10, 100, 30, F);
+	Problem P(-5.12, 5.12, 30, F);
 	//SetUpParams(int nbRuns 30, int nbEvoSteps 2000000, int popSize 30, int solSize 30);
-	SetUpParams sup{30, 2000, 30, 30};
+	SetUpParams sup{30, 5000, 30, 30};
 	
 	ABC A{P,sup};
-	A.evolution();
+	double best=A.evolution();
+	std::cout<<"Best cost "<<best;
 	//Revoir Banch manquants ?
 	
 }
