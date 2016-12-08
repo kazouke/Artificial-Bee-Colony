@@ -50,6 +50,7 @@ class ABC
 		
 		void sendEmployedBees();
 		std::vector <int> CalculateProbabilities() const;
+		void sendScoutBees();
 
 	private:
 		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size
