@@ -32,15 +32,15 @@ class Solution
 		double position(const int index) const; //retournera une position du tableau _solution
         void position(const int index, const double value);
         
-        //void incrementerTrial();
-        //int trial() const;
+        void incrementerTrial();
+        int trial() const;
 
 
 	private:
         std::vector<double> _solution;
         double _current_fitness;
 		const Problem& _pbm;
-		//Mettre int d_trial, on doit pouvoir le mettre à 0 et l'incrémenter de 1 et récupérer la valeur.
+		int d_trial;
   };
 
 #endif

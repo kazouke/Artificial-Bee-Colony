@@ -9,14 +9,14 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 /* Test pour Github - ICI C'EST LE MASTER*/
 
-Fonction F=somme_rastrigin;
+Fonction F=somme_sphere;
 
 int main(int argc, char** argv) {
 	srand(time(0));
 	//Problem(double lowLim, double upLim, int dim, Fonction f);
 	Problem P(10, 100, 30, F);
 	//SetUpParams(int nbRuns 30, int nbEvoSteps 2000000, int popSize 30, int solSize 30);
-	SetUpParams sup{100, 20, 30, 30};
+	SetUpParams sup{30, 2000, 30, 30};
 	
 	ABC A{P,sup};
 	A.evolution();

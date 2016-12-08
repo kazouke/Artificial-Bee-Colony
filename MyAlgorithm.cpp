@@ -7,6 +7,7 @@ using std::setw;
 using std::endl;
 
 #define TEST_LEVEL 1
+#define MAX_TRIAL 5
 
 //-------------------Constructeur / Destructeur --------------------------------
 
@@ -78,6 +79,7 @@ void ABC::evolution()
 			trier();
     		SendOnLookerBees(CalculateProbabilities());
     		trier();
+    		sendScoutBees();
 			//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
 		}
 		trier();
@@ -114,19 +116,15 @@ void ABC::sendEmployedBees()
         /*A randomly chosen solution is used in producing a mutant solution of the solution i, different from i*/
         int neighbour=random*(d_setup.population_size()-1);
 		while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
-		if (TEST_LEVEL>=2) cout<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;	
+		if (TEST_LEVEL>=2) cout<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;
 		
-		//On change une source à la place param2change dans newsol avec une nouvelle valeur
-        //Nouvelle valeur = Ancienne + ou - diff * rand
         newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random-0.5)*2);
-        //if generated parameter value is out of boundaries, it is shifted onto the boundaries
+        
         double lb= newsol->pbm().lowerLimit();
         double ub= newsol->pbm().upperLimit();
 		if (newsol->position(param2change)<lb) newsol->position(param2change, lb);
 		if (newsol->position(param2change)>ub) newsol->position(param2change, ub);
 		
-      	/*double ObjValSol=function(*newsol);
-		double FitnessSol=CalculateFitness(ObjValSol);*/
 		double FitnessSol=newsol->fitness();
         
         if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl;
@@ -136,8 +134,7 @@ void ABC::sendEmployedBees()
 	    if (FitnessSol<d_fitnessValues[i].fitness)
 	    {
 	        //If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
-			//d_solutions[i]->trial=0;
-        	delete d_solutions[i];
+			delete d_solutions[i];
 	        d_solutions[i]=newsol;
 	        newsol=nullptr;
 	        
@@ -148,7 +145,7 @@ void ABC::sendEmployedBees()
 	    {
 	    	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
 			//if the solution i can not be improved, increase its trial counter
-	        //d_solutions[i]->trial+=+1;
+	        d_solutions[i]->incrementerTrial();
 	    }
 		delete newsol;
     }
@@ -191,10 +188,7 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	    if (FitnessSol<d_fitnessValues[i].fitness)
 	    {
 	        //If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
-	        
-			//trial[i]=0;					A revoir
-        	
-			delete d_solutions[i];
+	        delete d_solutions[i];
 	        d_solutions[i]=newsol;
 	        newsol=nullptr;
 	        
@@ -205,7 +199,7 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	    {
 	    	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
 			//if the solution i can not be improved, increase its trial counter
-	        //trial[i]=trial[i]+1;		A revoir
+	       d_solutions[i]->incrementerTrial();
 	    }
 		delete newsol;
     }
@@ -245,10 +239,9 @@ void ABC::sendScoutBees()
 {
 	for (int i=0;i<d_setup.population_size();i++)
 	{
-		if (d_solutions[i].d_trial > MAX_TRIAL)
+		if (d_solutions[i]->trial() > MAX_TRIAL)
 		{
-			d_solutions[i].initialize();
-			d_solutions[i].d_trial = 0;
+			d_solutions[i]->initialize();
 		}
 	}
 }

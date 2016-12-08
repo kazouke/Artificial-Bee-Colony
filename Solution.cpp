@@ -1,11 +1,11 @@
 #include "Solution.h"
 
-Solution::Solution (const Problem& pbm) : _solution{}, _current_fitness{INT_MAX}, _pbm{pbm} {
+Solution::Solution (const Problem& pbm) : _solution{}, _current_fitness{INT_MAX}, _pbm{pbm}, d_trial{0} {
 	_solution.resize(pbm.dimension());
 	initialize();
 }
 
-Solution::Solution (const Solution& sol) : _solution{}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {
+Solution::Solution (const Solution& sol) : _solution{}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm}, d_trial{0} {
 	_solution = sol._solution;
 }
 
@@ -45,6 +45,7 @@ void Solution::initialize() {
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
 		//std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
+	d_trial=0;
 }
 
 double Solution::fitness() {
@@ -75,4 +76,14 @@ double Solution::maxSol() const {
 		if(_solution[i] > max)
 			max = _solution[i];
 	return max;
+}
+
+void Solution::incrementerTrial()
+{
+	d_trial++;
+}
+
+int Solution::trial() const
+{
+	return d_trial;
 }
