@@ -27,41 +27,45 @@ class ABC
 		ABC(const Problem& pbm,const SetUpParams& setup); 											//	OK
 		~ABC();																						//	OK
 
-		const SetUpParams& setup() const;															//	OK	retourne les paramètres
-		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associée et les tri croissant par fitness
-
-		void evaluate();																			//	-	En cours
-
+		//-----------------Get----------------------------------------
 		const vector<Solution*>& solutions() const;													//	OK	
+		vector<struct particle>&  fitness_values();													//	OK	
+		Solution& solution(const int index) const;													//	OK	
+		double fitness(const int index) const;														//	OK	
 		int upper_cost() const;																		//	OK	->Peu utile car les valeurs sont triées
 		int lower_cost() const;																		//	OK	->Peu utile car les valeurs sont triées
-		Solution& solution(const int index) const;													//	OK	
-		vector<struct particle>&  fitness_values();													//	OK	
-		double fitness(const int index) const;														//	OK	
-
 		double best_cost() const;																	//	OK	->Peu utile car les valeurs sont triées
 		double worst_cost() const;																	//	OK	->Peu utile car les valeurs sont triées
 		Solution& best_solution() const;															//	OK	
 		Solution& worst_solution() const;															//	OK	
+		const SetUpParams& setup() const;															//	OK	retourne les paramètres
+		
+		//-----------------Boucle---------------------------------------
+		double evolution();																			//	OK	Boucle principale
+		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associée et les tri croissant par fitness
+		void sendEmployedBees();																	//	OK
+		void SendOnLookerBees(std::vector <int> probabilite);										//	OK
+		std::vector <int> CalculateProbabilities() const;											//	OK
+		void sendScoutBees();																		//	OK
+		void evaluate();																			//	OK
 
-		double evolution();																			//	-	En attente d'évolution
-		void trier();																				//	OK	QuickSort
+
+
+																			
 		
-		void sendEmployedBees();
-		std::vector <int> CalculateProbabilities() const;
-		void SendOnLookerBees(std::vector <int> probabilite);
-		void sendScoutBees();
 		
-		void Propre(int param2change,int i);
+		
 
 	private:
-		vector<Solution*> 		d_solutions;     													//		nombre d'abeille d_setup.solution_size
-		vector<struct particle> d_fitnessValues;													//		
-		const SetUpParams 		d_setup;															//		
+		vector<Solution*> 		d_solutions;     													//		Abeilles 				d_setup.population_size
+		vector<struct particle> d_fitnessValues;													//		Evaluation des abeilles	d_setup.population_size
+		const SetUpParams 		d_setup;															//		Parametres
 		int 					d_upperCost,d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont triées
-		
+
+		void trier();
+		void Propre(int param2change,int i);														//	OK	QuickSort
 		int partition(int gauche, int droite);														//	OK	QuickSort
-		void QuickSort(int gauche, int droite);														//	OK	QuickSort										
+		void QuickSort(int gauche, int droite);														//	OK	QuickSort
 };
 
 #endif

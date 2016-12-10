@@ -6,9 +6,6 @@
 #include "bench.h"
 #include "MyAlgorithm.h"
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-/* Test pour Github - ICI C'EST LE MASTER*/
-
 Fonction F=somme_sphere;
 
 int main(int argc, char** argv) {
@@ -22,8 +19,7 @@ int main(int argc, char** argv) {
 	ABC A{P,sup};
 	double best=A.evolution();
 	std::cout<<"Best cost "<<best;
-	//Revoir Banch manquants ?
-	
+	system("pause");
 }
 
 /*

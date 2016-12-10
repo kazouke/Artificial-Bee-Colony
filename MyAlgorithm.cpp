@@ -87,21 +87,16 @@ void ABC::Propre(int param2change,int i)
 	while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
 	if (TEST_LEVEL>=2) cout<<"On regarde l'abeille "<<i+1<<" on choisit sa source "<<param2change+1<<endl<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;
 	
-    newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random-0.5)*2);
-        
-    double lb= newsol->pbm().lowerLimit();
-    double ub= newsol->pbm().upperLimit();
-	if (newsol->position(param2change)<lb) newsol->position(param2change, lb);
-	if (newsol->position(param2change)>ub) newsol->position(param2change, ub);
+	newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random*2-1)*2);
+
+	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
+	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
 	double FitnessSol=newsol->fitness();
        
     if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl<<"\t\tFitness nouvelle solution "<<FitnessSol<<endl;
-        
-    //a greedy selection is applied between the current solution i and its mutant
 	if (FitnessSol<d_fitnessValues[i].fitness)
 	{
-		//If the mutant solution is better than the current solution i, replace the solution with the mutant and reset the trial counter of solution i
 		delete d_solutions[i];
 	    d_solutions[i]=newsol;
 	    newsol=nullptr;
@@ -112,7 +107,6 @@ void ABC::Propre(int param2change,int i)
     else
 	{
 	   	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
-		//if the solution i can not be improved, increase its trial counter
 	    d_solutions[i]->incrementerTrial();
 	}
 	delete newsol;
@@ -144,7 +138,7 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	if (TEST_LEVEL>=2) cout<<"-------------SendOnLookerBees FIN----------------"<<endl;
 }
 
-std::vector <int> ABC::CalculateProbabilities() const // A FINIR
+std::vector <int> ABC::CalculateProbabilities() const
 {
 	std::vector <int> probabilite;
 	probabilite.resize(d_setup.population_size());
@@ -156,10 +150,12 @@ std::vector <int> ABC::CalculateProbabilities() const // A FINIR
 		
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
+			double teste=abs(0.9 * d_solutions[i]->position(j)/maxsol+0.1);
+			
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
 			double r = random;
-			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<0.9*d_solutions[i]->position(j)/maxsol+0.1<<' ';
-			if (r<0.9 * d_solutions[i]->position(j)/maxsol+0.1)
+			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<teste<<' ';
+			if (r<teste)
 			{
 				probabilite[i]=j;
 				if (TEST_LEVEL>=2) std::cout<< " O"<<std::endl;
@@ -172,16 +168,8 @@ std::vector <int> ABC::CalculateProbabilities() const // A FINIR
 	return probabilite;
 }
 
-void ABC::sendScoutBees() //Voir opti : Protéger les bonnes sources de la réinitialisation ?
+void ABC::sendScoutBees()
 {
-	/*	ORIGINAL
-	for (int i=0;i<d_setup.population_size();i++)
-	{
-		if (d_solutions[i]->trial() > MAX_TRIAL)
-		{
-			d_solutions[i]->initialize();
-		}
-	}*/
 	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
 	for (int i=d_setup.population_size()/2;i<d_setup.population_size();i++)
 	{
