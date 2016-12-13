@@ -145,17 +145,17 @@ std::vector <int> ABC::CalculateProbabilities() const
 	if (TEST_LEVEL>=2) cout<<"--------------CalculateProbabilities-------------"<<endl;
 	for (int i=0; i<d_setup.population_size(); ++i)
 	{
-		double maxsol=d_solutions[i]->maxSol();
+		double maxsol=d_solutions[i]->maxSol(); // A revoir
 		if (TEST_LEVEL>=2) std::cout<<"Abeille "<<std::setw(3)<<i+1<<" avec le max "<<maxsol<<std::endl;
 		
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
-			double teste=abs(0.9 * d_solutions[i]->position(j)/maxsol+0.1);
+			double test=0.9 * d_solutions[i]->position(j)/maxsol+0.1;
 			
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
 			double r = random;
-			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<teste<<' ';
-			if (r<teste)
+			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<test<<' ';
+			if (r<test)
 			{
 				probabilite[i]=j;
 				if (TEST_LEVEL>=2) std::cout<< " O"<<std::endl;

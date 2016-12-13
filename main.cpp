@@ -7,6 +7,7 @@
 #include "MyAlgorithm.h"
 
 Fonction F=somme_sphere;
+//F=somme_rastrigin;
 
 int main(int argc, char** argv) {
 	srand(time(0));
@@ -18,7 +19,7 @@ int main(int argc, char** argv) {
 	
 	ABC A{P,sup};
 	double best=A.evolution();
-	std::cout<<"Best cost "<<best;
+	std::cout<<"Best cost "<<best<<std::endl;
 	system("pause");
 }
 
