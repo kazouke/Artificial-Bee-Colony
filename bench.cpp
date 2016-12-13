@@ -50,6 +50,18 @@ double schwefel(const vector<double> &individu)
 	return y;
 }
 
+double schaffer(const vector<double> &individu)
+{
+	double x1 = individu[1];
+	double x2 = individu[2];
+	
+	double fact1 = pow((sin(x1*x1 - x2*x2)), 2) - 0.5;
+	double fact2 = pow((1 + 0.001*(x1*x1 + x2*x2)), 2);
+	
+	double y = 0.5 + fact1/fact2;
+	return y;
+}
+
 double proba_alea()
 {
     return 1.0*rand()/RAND_MAX;

@@ -17,6 +17,7 @@ double somme_ackley(const vector<double> &individu);
 double rosenbrock(const vector<double> &individu, int d);
 double ackley(const vector<double> &individu, int d);
 double schwefel(const vector<double> &individu);
+double schaffer(const vector<double> &individu);
 
 double proba_alea();
 double aleatoire(double a, double b);
