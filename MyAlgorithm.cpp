@@ -1,13 +1,17 @@
 #include "MyAlgorithm.h"
 
-#define random rand()%1000/1000.0
+double random()
+{
+//	return rand()%(INT_MAX/2)*1.0/(INT_MAX/2-1);
+	return rand()%1001/1000.0;
+}
 
 using std::cout;
 using std::setw;
 using std::endl;
 
-#define TEST_LEVEL 2
-#define MAX_TRIAL 100
+int TEST_LEVEL;
+const int MAX_TRIAL=100;
 
 //-------------------Constructeur / Destructeur --------------------------------
 
@@ -15,15 +19,12 @@ ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions{}, d_fitnessVa
 {
 	d_solutions.resize(d_setup.population_size());
 	d_fitnessValues.resize(d_setup.population_size());
-	if (TEST_LEVEL>=2) cout<<"--------------Initialisation----------------"<<endl<<"Creation de l'ABC : "<<endl<<pbm<<endl<<d_setup<<endl;
-	
 	for(int i=0;i<d_setup.population_size();++i)
 	{
 		d_solutions[i]=new Solution{pbm};
         d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
 	}
 	trier();
-	if (TEST_LEVEL>=2) cout<<"------------Fin Initialisation--------------"<<endl;
 }
 
 ABC::~ABC() {for(int i=0;i<d_solutions.size();++i){delete d_solutions[i];}}
@@ -44,11 +45,10 @@ const SetUpParams& ABC::setup() const	{return d_setup;}
 
 //-----------------Boucle---------------------------------------
 
-double ABC::evolution()
+double ABC::evolution(int info)
 {
-	std::fixed;
-	double moyenne=0;
-	double meilleur=INT_MAX;
+	TEST_LEVEL=info;
+	std::fixed;double moyenne=0;double meilleur=INT_MAX;
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
@@ -57,7 +57,6 @@ double ABC::evolution()
     		sendEmployedBees();
     		SendOnLookerBees(CalculateProbabilities());
     		sendScoutBees();
-			//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
 		}
 		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setprecision(10)<<best_cost();
 		moyenne+=best_cost()/d_setup.independent_runs();
@@ -82,39 +81,30 @@ void ABC::initialize()
         if (TEST_LEVEL>=2) cout<<setw(3)<<i+1<<'\t'<<d_fitnessValues[i].fitness<<endl;
     }
     trier();
-    if (TEST_LEVEL>=2) cout<<"--------------Fin Initialize----------------"<<endl;
+    if (TEST_LEVEL>=2) {cout<<"--------------Fin Initialize----------------"<<endl;system("pause");}
 }
 
 void ABC::Propre(int param2change,int i)
 {
 	Solution* newsol= new Solution{*d_solutions[i]};
 	
-	int neighbour=random*(d_setup.population_size()-1);
-	while(neighbour==i) neighbour=random*(d_setup.population_size()-1);
-	if (TEST_LEVEL>=2) cout<<"On regarde l'abeille "<<i+1<<" on choisit sa source "<<param2change+1<<endl<<"\tOn choisit l'abeille voisine "<<neighbour+1<<endl;
+	int neighbour=random()*(d_setup.population_size()-1);
+	while(neighbour==i) neighbour=random()*(d_setup.population_size()-1);
 	
-	newsol->position(param2change,newsol->position(param2change)+(newsol->position(param2change)-d_solutions[neighbour]->position(param2change))*(random*2-1)*2);
-
+	double x=newsol->position(param2change);
+	double y=d_solutions[neighbour]->position(param2change);
+	newsol->position(param2change,x+(x-y)*(random()*2-1)*2);
+	
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
 	double FitnessSol=newsol->fitness();
-       
-    if (TEST_LEVEL>=2) cout<<"\tFitness L'abeille d'origine avait "<<d_fitnessValues[i].fitness<<endl<<"\t\tFitness nouvelle solution "<<FitnessSol<<endl;
 	if (FitnessSol<d_fitnessValues[i].fitness)
 	{
-		delete d_solutions[i];
-	    d_solutions[i]=newsol;
-	    newsol=nullptr;
-	        
+		delete d_solutions[i];d_solutions[i]=newsol;newsol=nullptr;
 	    d_fitnessValues[i].fitness=FitnessSol;
-	    if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est << meilleure >> !"<<endl;
 	}
-    else
-	{
-	   	if (TEST_LEVEL>=2) cout<<"\tLa nouvelle solution est moins bonne."<<endl;
-	    d_solutions[i]->incrementerTrial();
-	}
+    else	d_solutions[i]->incrementerTrial();
 	delete newsol;
 }
 
@@ -124,11 +114,11 @@ void ABC::sendEmployedBees()
 	for (int i=0;i<d_setup.population_size();i++)
 	{
 		//On change un parametre de maniere completement aleatoire
-        int param2change=random*(d_setup.solution_size()-1);
+        int param2change=random()*(d_setup.solution_size()-1);
         Propre(param2change,i);
     }
 	trier();
-	if (TEST_LEVEL>=2) cout<<"-------------SendEmployedBees FIN----------------"<<endl;
+	if (TEST_LEVEL>=2) {cout<<"-------------SendEmployedBees FIN----------------"<<endl;system("pause");}
 }
 
 void ABC::SendOnLookerBees(std::vector <int> probabilite)
@@ -141,7 +131,7 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
         Propre(param2change,i);
 	}
 	trier();
-	if (TEST_LEVEL>=2) cout<<"-------------SendOnLookerBees FIN----------------"<<endl;
+	if (TEST_LEVEL>=2) {cout<<"-------------SendOnLookerBees FIN----------------"<<endl;system("pause");}
 }
 
 std::vector <int> ABC::CalculateProbabilities() const
@@ -151,7 +141,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 	if (TEST_LEVEL>=2) cout<<"--------------CalculateProbabilities-------------"<<endl;
 	for (int i=0; i<d_setup.population_size(); ++i)
 	{
-		double maxsol=d_solutions[i]->maxSol(); // A revoir
+		double maxsol=d_solutions[i]->maxSol();
 		if (TEST_LEVEL>=2) std::cout<<"Abeille "<<std::setw(3)<<i+1<<" avec le max "<<maxsol<<std::endl;
 		
 		for (int j=0; j<d_setup.solution_size(); ++j)
@@ -160,7 +150,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 			if (test<0) test*=-1;
 			
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
-			double r = random;
+			double r = random();
 			if (TEST_LEVEL>=2) cout<<"Proba : "<<setw(6)<<r<<" / "<<setw(10)<<test<<' ';
 			if (r<test)
 			{
@@ -178,7 +168,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 void ABC::sendScoutBees()
 {
 	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
-	for (int i=d_setup.population_size();i<d_setup.population_size();i++)
+	for (int i=d_setup.population_size()/2;i<d_setup.population_size();i++)
 	{
 		if (d_solutions[i]->trial() > MAX_TRIAL)
 		{

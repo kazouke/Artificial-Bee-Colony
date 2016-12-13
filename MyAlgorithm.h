@@ -41,7 +41,7 @@ class ABC
 		const SetUpParams& setup() const;															//	OK	retourne les paramètres
 		
 		//-----------------Boucle---------------------------------------
-		double evolution();																			//	OK	Boucle principale
+		double evolution(int info);																			//	OK	Boucle principale
 		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associée et les tri croissant par fitness
 		void sendEmployedBees();																	//	OK
 		void SendOnLookerBees(std::vector <int> probabilite);										//	OK
