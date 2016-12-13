@@ -12,28 +12,11 @@ double rosenbrock(const vector<double> &individu, int d)
 double somme_rosenbrock(const vector<double> &individu)
 {
 	double j=0;
-
 	for(unsigned int i=0;i<individu.size()-1;++i)
 	{
 		j+=rosenbrock(individu,i);
 	}
-
 	return j;
-}
-
-double himmelblau(const vector<double> &individu, int d)
-{
-    double a{individu[d] * individu[d] + individu[d + 1] - 11},
-           b{individu[d] + individu[d + 1] * individu[d + 1] - 7};
-    return a * a + b * b;
-}
-
-double somme_himmelblau(const vector<double> &individu)
-{
-    double j{};
-    for(unsigned int i{} ; i < individu.size() - 1 ; ++i)
-        j += himmelblau(individu, i);
-    return j;
 }
 
 double somme_rastrigin(const vector<double> &individu)
@@ -42,14 +25,6 @@ double somme_rastrigin(const vector<double> &individu)
     for(auto x : individu)
         j += x * x - 10 * std::cos(2 * M_PI * x);
     return 10 * individu.size() + j;
-}
-
-double somme_sphere(const vector<double> &individu)
-{
-    double j{};
-    for(auto x : individu)
-        j += x * x;
-    return j;
 }
 
 double somme_ackley(const vector<double> &individu)
@@ -61,16 +36,6 @@ double somme_ackley(const vector<double> &individu)
         s2 += std::cos(2 * M_PI * x);
     }
     return - 20 * exp(-0.2 * sqrt(s1 / individu.size())) - exp(s2 / individu.size()) + exp(1) + 20;
-}
-
-double somme_michalewicz(const vector<double> &individu)
-{
-    double j{};
-    for(unsigned int i{} ; i < individu.size() ; ++i){
-        double x{individu[i]};
-        j += std::sin(x) * std::pow(std::sin(i * x * x / M_PI), 20);
-    }
-    return -j;
 }
 
 double proba_alea()

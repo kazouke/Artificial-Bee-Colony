@@ -10,15 +10,12 @@ using std::vector;
 
 
 
-double rosenbrock(const vector<double> &individu, int d);
 double somme_rosenbrock(const vector<double> &individu);
-double himmelblau(const vector<double> &individu, int d);
-double somme_himmelblau(const vector<double> &individu);
 double somme_rastrigin(const vector<double> &individu);
-double somme_sphere(const vector<double> &individu);
-double ackley(const vector<double> &individu, int d);
 double somme_ackley(const vector<double> &individu);
-double somme_michalewicz(const vector<double> &individu);
+
+double rosenbrock(const vector<double> &individu, int d);
+double ackley(const vector<double> &individu, int d);
 
 
 double proba_alea();

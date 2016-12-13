@@ -6,7 +6,7 @@ using std::cout;
 using std::setw;
 using std::endl;
 
-#define TEST_LEVEL 1
+#define TEST_LEVEL 2
 #define MAX_TRIAL 100
 
 //-------------------Constructeur / Destructeur --------------------------------
@@ -46,6 +46,7 @@ const SetUpParams& ABC::setup() const	{return d_setup;}
 
 double ABC::evolution()
 {
+	std::fixed;
 	double moyenne=0;
 	double meilleur=INT_MAX;
 	for (int i=0; i<d_setup.independent_runs(); ++i)
@@ -58,11 +59,16 @@ double ABC::evolution()
     		sendScoutBees();
 			//Evaluate jusqu'à d_setup.nb_evolution_steps() ou fitness = 0
 		}
-		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setw(8)<<best_cost()<<std::endl;
+		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setprecision(10)<<best_cost();
 		moyenne+=best_cost()/d_setup.independent_runs();
-		if (meilleur>best_cost()) meilleur=best_cost();
+		if (meilleur>best_cost())
+		{
+			cout<<" nouveau meilleur.";
+			meilleur=best_cost();
+		}
+		cout<<std::endl;
 	}
-	cout<<"Moyenne = \t\t\t"<<std::setw(13)<<moyenne<<endl;
+	cout<<"Moyenne = "<<std::setprecision(10)<<moyenne<<endl;
 	return meilleur;
 }
 
@@ -151,6 +157,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
 			double test=0.9 * d_solutions[i]->position(j)/maxsol+0.1;
+			if (test<0) test*=-1;
 			
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
 			double r = random;
@@ -171,7 +178,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 void ABC::sendScoutBees()
 {
 	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
-	for (int i=d_setup.population_size()/2;i<d_setup.population_size();i++)
+	for (int i=d_setup.population_size();i<d_setup.population_size();i++)
 	{
 		if (d_solutions[i]->trial() > MAX_TRIAL)
 		{

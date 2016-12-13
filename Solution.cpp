@@ -72,9 +72,12 @@ void Solution::position(const int index, const double value) {
 
 double Solution::maxSol() const {
 	double max = _solution[0];
+	if (max<0) max*=-1;
 	for(int i = 1; i < _solution.size(); i++)
-		if(_solution[i] > max)
-			max = _solution[i];
+	{
+		if(_solution[i] > max) max = _solution[i];
+		if(_solution[i] * -1 > max) max = _solution[i]*-1;
+	}
 	return max;
 }
 
