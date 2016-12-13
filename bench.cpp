@@ -62,6 +62,24 @@ double schaffer(const vector<double> &individu)
 	return y;
 }
 
+double weierstrass(const vector<double> &individu)
+{
+	double val = 0;
+	for(int i = 0; i < individu.size(); i++)
+	{
+		for(int k = 0; k < 20; k++)
+		{
+			val += pow(0.5, k) * cos(2 * M_PI * pow(3, k) * (individu[i]+0.5));
+		}
+	}
+	double temp = 0;
+	for(int k = 0; k < 20; k++)
+	{
+		temp += pow(0.5, k) * cos(2 * M_PI * pow(3, k) * 0.5);
+	}
+	return val - individu.size() * temp;
+}
+
 double proba_alea()
 {
     return 1.0*rand()/RAND_MAX;
