@@ -38,6 +38,18 @@ double somme_ackley(const vector<double> &individu)
     return - 20 * exp(-0.2 * sqrt(s1 / individu.size())) - exp(s2 / individu.size()) + exp(1) + 20;
 }
 
+double schwefel(const vector<double> &individu)
+{
+	int d = individu.size();
+	double sum = 0;
+	for(int i = 0; i < d; i++)
+	{
+		sum += individu[i] * sin(sqrt(abs(individu[i])));
+	}
+	double y = 418.9829 * d - sum;
+	return y;
+}
+
 double proba_alea()
 {
     return 1.0*rand()/RAND_MAX;
