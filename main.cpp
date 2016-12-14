@@ -31,8 +31,8 @@ Fonction choixFonction(int&xmin, int&xmax)
 	}
 	if (choix==3)
 	{
-		xmin=-30;
-		xmax=30;
+		xmin=-5;
+		xmax=10;
 		return somme_rosenbrock;
 	}
 }
