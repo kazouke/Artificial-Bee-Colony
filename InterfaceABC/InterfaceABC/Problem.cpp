@@ -1,10 +1,10 @@
 #include "Problem.h"
 
-Problem::Problem(double lowLim, double upLim, int dim, Fonction f):
-	_lowerLimit{lowLim},
-	_upperLimit{upLim},
-	_dimension{dim},
-	_fonction{f}
+Problem::Problem(double lowLim, double upLim, int dim, Fonction f) :
+_lowerLimit{ lowLim },
+_upperLimit{ upLim },
+_dimension{ dim },
+_fonction{ f }
 {
 }
 
@@ -14,13 +14,13 @@ bool Problem::operator== (const Problem& pbm) const {
 
 std::ostream& operator<<(std::ostream& os, const Problem& pbm)
 {
-    os <<"Limit bas "<< pbm._lowerLimit << " Limit haut " << pbm._upperLimit << " dimension " << pbm._dimension;
-    return os;
+	os << "Problem : limit low " << pbm._lowerLimit << " high " << pbm._upperLimit << " dim " << pbm._dimension;
+	return os;
 }
 std::istream& operator>>(std::istream& is, Problem& pbm)
 {
-    is >> pbm._lowerLimit >> pbm._upperLimit >> pbm._dimension;
-    return is;
+	is >> pbm._lowerLimit >> pbm._upperLimit >> pbm._dimension;
+	return is;
 }
 
 double Problem::lowerLimit() const
@@ -40,5 +40,5 @@ int Problem::dimension() const
 
 Fonction Problem::f() const
 {
-    return _fonction;
+	return _fonction;
 }

@@ -12,8 +12,10 @@ using namespace System::Windows::Forms;
 
 void InterfaceABC::MyForm::CreerSetUp(int nbRuns, int nbEvoSteps, int popSize, int solSize) {
 	SetUpParams sup{ nbRuns, nbEvoSteps, popSize, solSize };
+	Problem P(-5.12, 5.12, 30, somme_rastrigin);
+	ABC A{ P, sup };
 	//Test de la construction de SetUpParams réussi :
-	textBox3->Text = "Nombre de runs : " + sup.independent_runs() + "\n Nombre d'étapes d'évolution : " + sup.nb_evolution_steps() + "\n Taille de la population : " + sup.population_size() + "\n Taille de la solution : " + sup.solution_size();
+	textBox3->Text = "Meilleur : " + A.evolution(0);
 }
 
 [STAThread]//leave this as is

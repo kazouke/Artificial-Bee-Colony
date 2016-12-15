@@ -1,11 +1,11 @@
 #include "Solution.h"
 
-Solution::Solution (const Problem& pbm) : _solution{}, _current_fitness{INT_MAX}, _pbm{pbm} {
+Solution::Solution(const Problem& pbm) : _solution{}, _current_fitness{ INT_MAX }, _pbm{ pbm }, d_trial{ 0 } {
 	_solution.resize(pbm.dimension());
 	initialize();
 }
 
-Solution::Solution (const Solution& sol) : _solution{}, _current_fitness{sol._current_fitness}, _pbm{sol._pbm} {
+Solution::Solution(const Solution& sol) : _solution{}, _current_fitness{ sol._current_fitness }, _pbm{ sol._pbm }, d_trial{ 0 } {
 	_solution = sol._solution;
 }
 
@@ -13,12 +13,12 @@ Solution::~Solution() {}
 
 std::ostream& operator<< (std::ostream& os, const Solution& sol) {
 	os << sol._current_fitness;
-    return os;
+	return os;
 }
 
 std::istream& operator>> (std::istream& is, Solution& sol) {
 	is >> sol._current_fitness;
-    return is;
+	return is;
 }
 
 const Problem& Solution::pbm() const {
@@ -41,16 +41,17 @@ bool Solution::operator!= (const Solution& sol) const {
 
 void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
-		double r = 1.0*rand() / (RAND_MAX+1.0);
+		double r = 1.0*rand() / (RAND_MAX + 1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
 		//std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
+	d_trial = 0;
 }
 
 double Solution::fitness() {
-	_current_fitness=(_pbm.f())(_solution);
+	_current_fitness = (_pbm.f())(_solution);
 	//std::cout <<"Fitness : " <<_current_fitness << std::endl;
-    return _current_fitness;
+	return _current_fitness;
 }
 
 unsigned int Solution::size() const {
@@ -71,8 +72,21 @@ void Solution::position(const int index, const double value) {
 
 double Solution::maxSol() const {
 	double max = _solution[0];
-	for(int i = 1; i < _solution.size(); i++)
-		if(_solution[i] > max)
-			max = _solution[i];
+	if (max<0) max *= -1;
+	for (int i = 1; i < _solution.size(); i++)
+	{
+		if (_solution[i] > max) max = _solution[i];
+		if (_solution[i] * -1 > max) max = _solution[i] * -1;
+	}
 	return max;
+}
+
+void Solution::incrementerTrial()
+{
+	d_trial++;
+}
+
+int Solution::trial() const
+{
+	return d_trial;
 }

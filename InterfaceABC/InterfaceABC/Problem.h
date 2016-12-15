@@ -8,13 +8,13 @@ typedef double(*Fonction)(const std::vector<double>&);
 class Problem
 {
 public:
-	Problem()=delete;
+	Problem() = delete;
 	Problem(double lowLim, double upLim, int dim, Fonction f);
-	~Problem()=default;
+	~Problem() = default;
 
 	friend std::ostream& operator<< (std::ostream& os, const Problem& pbm);
 	friend std::istream& operator>> (std::istream& is, Problem& pbm);
-	
+
 	Problem& operator=  (const Problem& pbm);
 	bool operator== (const Problem& pbm) const;
 	bool operator!= (const Problem& pbm) const;
@@ -24,11 +24,11 @@ public:
 	double upperLimit() const;
 	int dimension() const;
 	Fonction f() const;
-	private:
+private:
 
-		double _lowerLimit, _upperLimit;
-		int _dimension;
-		Fonction _fonction;
+	double _lowerLimit, _upperLimit;
+	int _dimension;
+	Fonction _fonction;
 };
 
 #endif
