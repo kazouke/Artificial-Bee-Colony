@@ -24,7 +24,6 @@ ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions{}, d_fitnessVa
 		d_solutions[i]=new Solution{pbm};
         d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
 	}
-	trier();
 }
 
 ABC::~ABC() {for(int i=0;i<d_solutions.size();++i){delete d_solutions[i];}}
@@ -56,6 +55,7 @@ double ABC::evolution(int info)
 		{
     		sendEmployedBees();
     		SendOnLookerBees(CalculateProbabilities());
+    		trier();
     		sendScoutBees();
 		}
 		if (TEST_LEVEL>=1) std::cout << "Iteration n"<<std::setw(2)<<i+1<<" -> meilleur solution : "<<std::setprecision(10)<<best_cost();
@@ -117,7 +117,6 @@ void ABC::sendEmployedBees()
         int param2change=random()*(d_setup.solution_size()-1);
         Propre(param2change,i);
     }
-	trier();
 	if (TEST_LEVEL>=2) {cout<<"-------------SendEmployedBees FIN----------------"<<endl;system("pause");}
 }
 
@@ -130,7 +129,6 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
         int param2change=probabilite[i];
         Propre(param2change,i);
 	}
-	trier();
 	if (TEST_LEVEL>=2) {cout<<"-------------SendOnLookerBees FIN----------------"<<endl;system("pause");}
 }
 
@@ -168,14 +166,16 @@ std::vector <int> ABC::CalculateProbabilities() const
 void ABC::sendScoutBees()
 {
 	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
-	for (int i=d_setup.population_size()/2;i<d_setup.population_size();i++)
+	int maxIndex = 0;
+	for (int i=1;i<d_setup.population_size();i++)
 	{
-		if (d_solutions[i]->trial() > MAX_TRIAL)
+		if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial())
 		{
-			d_solutions[i]->initialize();
+			maxIndex=i;
 		}
 	}
-	trier();
+	if(d_solutions[maxIndex]->trial()>=MAX_TRIAL)
+			d_solutions[maxIndex]->initialize();
 }
 
 //-------------------Fonction de Tri-----------------------------
