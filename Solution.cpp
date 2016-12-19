@@ -43,7 +43,7 @@ void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
 		double r = 1.0*rand() / (RAND_MAX+1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
-		//std::cout << "Qualit� : "<<_solution[i] << std::endl;
+		//std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
 	d_trial=0;
 }
@@ -70,7 +70,7 @@ void Solution::position(const int index, const double value) {
 	_solution[index] = value;
 }
 
-double Solution::maxSol() const {
+double Solution::maxSol() const { //Pas ouf il faudrait utiliser la valeur absolue, et pourquoi on a des sources de nourriture négatives ?
 	double max = _solution[0];
 	if (max<0) max*=-1;
 	for(int i = 1; i < _solution.size(); i++)
