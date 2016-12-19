@@ -32,17 +32,17 @@ class ABC
 		vector<struct particle>&  fitness_values();													//	OK	
 		Solution& solution(const int index) const;													//	OK	
 		double fitness(const int index) const;														//	OK	
-		int upper_cost() const;																		//	OK	->Peu utile car les valeurs sont triÈes
-		int lower_cost() const;																		//	OK	->Peu utile car les valeurs sont triÈes
-		double best_cost() const;																	//	OK	->Peu utile car les valeurs sont triÈes
-		double worst_cost() const;																	//	OK	->Peu utile car les valeurs sont triÈes
+		int upper_cost() const;																		//	OK	->Peu utile car les valeurs sont tri√©es
+		int lower_cost() const;																		//	OK	->Peu utile car les valeurs sont tri√©es
+		double best_cost() const;																	//	OK	->Peu utile car les valeurs sont tri√©es
+		double worst_cost() const;																	//	OK	->Peu utile car les valeurs sont tri√©es
 		Solution& best_solution() const;															//	OK	
 		Solution& worst_solution() const;															//	OK	
-		const SetUpParams& setup() const;															//	OK	retourne les paramËtres
+		const SetUpParams& setup() const;															//	OK	retourne les param√®tres
 		
 		//-----------------Boucle---------------------------------------
 		double evolution(int info);																			//	OK	Boucle principale
-		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associÈe et les tri croissant par fitness
+		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associ√©e et les tri croissant par fitness
 		void sendEmployedBees();																	//	OK
 		void SendOnLookerBees(std::vector <int> probabilite);										//	OK
 		std::vector <int> CalculateProbabilities() const;											//	OK
@@ -60,10 +60,10 @@ class ABC
 		vector<Solution*> 		d_solutions;     													//		Abeilles 				d_setup.population_size
 		vector<struct particle> d_fitnessValues;													//		Evaluation des abeilles	d_setup.population_size
 		const SetUpParams 		d_setup;															//		Parametres
-		int 					d_upperCost,d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont triÈes
+		int 					d_upperCost,d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont tri√©es
 
 		void trier();
-		void Propre(int param2change,int i);														//	OK	QuickSort
+		void BeesWork(int param2change,int i);														//	OK	QuickSort
 		int partition(int gauche, int droite);														//	OK	QuickSort
 		void QuickSort(int gauche, int droite);														//	OK	QuickSort
 };
