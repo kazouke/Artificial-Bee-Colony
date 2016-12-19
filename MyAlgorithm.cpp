@@ -3,7 +3,8 @@
 double random()
 {
 //	return rand()%(INT_MAX/2)*1.0/(INT_MAX/2-1);
-	return rand()%1001/1000.0;
+//	return rand()%1001/1000.0; //En fait on peut utiliser RAND_MAX 
+	return (double) rand() / (double) RAND_MAX; //J'ai pas testé,je suis pas chez moi et j'ai pas d'IDE,est-ce que ça marche ?
 }
 
 using std::cout;
@@ -31,11 +32,11 @@ ABC::~ABC() {for(int i=0;i<d_solutions.size();++i){delete d_solutions[i];}}
 //-----------------Get----------------------------------------
 
 const vector<Solution*>& ABC::solutions() const	{return d_solutions;}
-vector<struct particle>&  ABC::fitness_values()	{return d_fitnessValues;}
+vector<struct particle>&  ABC::fitness_values()	{return d_fitnessValues;} //On l'utilise jamais en fait celui-là,du coup a-t-on réellement besoin de particle ?
 Solution& ABC::solution(const int index) const	{return *(d_solutions[index]);}
 double ABC::fitness(const int index) const		{return d_fitnessValues[index].fitness;}
-int ABC::upper_cost() const		{return d_upperCost;}											//Tableau tri� ->d_setup.population_size()-1 
-int ABC::lower_cost() const		{return d_lowerCost;}											//Tableau tri� ->0
+int ABC::upper_cost() const		{return d_upperCost;}											//Tableau trié ->d_setup.population_size()-1 
+int ABC::lower_cost() const		{return d_lowerCost;}											//Tableau trié ->0
 double ABC::best_cost()  const	{return fitness(lower_cost());}
 double ABC::worst_cost() const	{return fitness(upper_cost());}
 Solution& ABC::best_solution()  const	{return solution(best_cost());}
@@ -51,6 +52,7 @@ double ABC::evolution(int info)
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
+		trier();
 		for (int j=0;j<d_setup.nb_evolution_steps() && best_cost()>0;++j)
 		{
     		sendEmployedBees();
@@ -80,11 +82,10 @@ void ABC::initialize()
         d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
         if (TEST_LEVEL>=2) cout<<setw(3)<<i+1<<'\t'<<d_fitnessValues[i].fitness<<endl;
     }
-    trier();
     if (TEST_LEVEL>=2) {cout<<"--------------Fin Initialize----------------"<<endl;system("pause");}
 }
 
-void ABC::Propre(int param2change,int i)
+void ABC::BeesWork(int param2change,int i)
 {
 	Solution* newsol= new Solution{*d_solutions[i]};
 	
@@ -115,7 +116,7 @@ void ABC::sendEmployedBees()
 	{
 		//On change un parametre de maniere completement aleatoire
         int param2change=random()*(d_setup.solution_size()-1);
-        Propre(param2change,i);
+        BeesWork(param2change,i);
     }
 	if (TEST_LEVEL>=2) {cout<<"-------------SendEmployedBees FIN----------------"<<endl;system("pause");}
 }
@@ -144,7 +145,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 		
 		for (int j=0; j<d_setup.solution_size(); ++j)
 		{
-			double test=0.9 * d_solutions[i]->position(j)/maxsol+0.1;
+			double test=0.9 * d_solutions[i]->position(j)/maxsol+0.1; //Il faut aussi valeur absolue avec abs à la place de *-1
 			if (test<0) test*=-1;
 			
 			if (TEST_LEVEL>=2) std::cout<<"Regarde a la position "<<std::setw(3)<<j<<' '<<std::setw(10)<<d_solutions[i]->position(j)<<' ';
@@ -165,7 +166,6 @@ std::vector <int> ABC::CalculateProbabilities() const
 
 void ABC::sendScoutBees()
 {
-	//	TENTATIVE d'OPTIMISATION : On ne touche pas aux meilleures solutions
 	int maxIndex = 0;
 	for (int i=1;i<d_setup.population_size();i++)
 	{
@@ -179,7 +179,6 @@ void ABC::sendScoutBees()
 }
 
 //-------------------Fonction de Tri-----------------------------
-//Utilisation du tri QuickSort -> cours Algorithmique r�cursif
 
 void ABC::trier(){QuickSort(0,d_setup.population_size());d_lowerCost=0;	d_upperCost=d_setup.population_size()-1;}
 
