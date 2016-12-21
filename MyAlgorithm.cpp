@@ -2,9 +2,7 @@
 
 double random()
 {
-//	return rand()%(INT_MAX/2)*1.0/(INT_MAX/2-1);
-//	return rand()%1001/1000.0; //En fait on peut utiliser RAND_MAX 
-	return (double) rand() / (double) RAND_MAX; //J'ai pas testé,je suis pas chez moi et j'ai pas d'IDE,est-ce que ça marche ?
+	return (double) rand() / (double) RAND_MAX;
 }
 
 using std::cout;
@@ -128,7 +126,7 @@ void ABC::SendOnLookerBees(std::vector <int> probabilite)
 	{
 		//On change un parametre choisi par la fonction CalculateProbabilities
         int param2change=probabilite[i];
-        Propre(param2change,i);
+        BeesWork(param2change,i);
 	}
 	if (TEST_LEVEL>=2) {cout<<"-------------SendOnLookerBees FIN----------------"<<endl;system("pause");}
 }
