@@ -68,9 +68,7 @@ int main(int argc, char** argv) {
 	int eVo=nbEvo();
 	SetUpParams sup{iT, eVo, 30, 30};
 	ABC A{P,sup};
-	double best=0;
-	if (iT==eVo && eVo==1) best=A.evolution(2);
-	else best=A.evolution(1);
+	double best=A.evolution();
 	
 	std::cout<<"Best cost "<<best<<std::endl;
 	system("pause");

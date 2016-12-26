@@ -43,9 +43,9 @@ const SetUpParams& ABC::setup() const	{return d_setup;}
 
 //-----------------Boucle---------------------------------------
 
-double ABC::evolution(int info)
+double ABC::evolution()
 {
-	TEST_LEVEL=info;
+	TEST_LEVEL=0;
 	std::fixed;double moyenne=0;double meilleur=INT_MAX;
 	for (int i=0; i<d_setup.independent_runs(); ++i)
 	{

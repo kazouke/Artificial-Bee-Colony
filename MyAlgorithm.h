@@ -24,7 +24,16 @@ struct particle
 class ABC
 {
 	public:
+		/*! \brief Constructor
+    	* MyAlgorithm class Constructor
+    	* \param[in] pbm : ProblËme
+    	* \param[in] setup : Options
+    	*/
 		ABC(const Problem& pbm,const SetUpParams& setup); 											//	OK
+		
+		/*! \brief Destructor
+    	* MyAlgorithm class Destructor
+    	*/
 		~ABC();																						//	OK
 
 		//-----------------Get----------------------------------------
@@ -38,23 +47,38 @@ class ABC
 		double worst_cost() const;																	//	OK	->Peu utile car les valeurs sont tri√©es
 		Solution& best_solution() const;															//	OK	
 		Solution& worst_solution() const;															//	OK	
-		const SetUpParams& setup() const;															//	OK	retourne les param√®tres
+		const SetUpParams& setup() const;															//	OK	retourne les paramËtres
 		
 		//-----------------Boucle---------------------------------------
-		double evolution(int info);																			//	OK	Boucle principale
+		/*! \brief Evolution
+    	* MyAlgorithm class Evolution
+    	*/
+		double evolution();																			//	OK	Boucle principale
+		/*! \brief Initialize
+    	* MyAlgorithm class Initialize
+    	*/
 		void initialize();																			//	OK	Renouvelle les solutions, calcule la fitness associ√©e et les tri croissant par fitness
+		/*! \brief Initialize
+    	* MyAlgorithm class Initialize
+    	*/
 		void sendEmployedBees();																	//	OK
+		/*! \brief SendOnLookerBees
+    	* MyAlgorithm class SendOnLookerBees
+    	* \param[in] probabilite : ProbabilitÈs de chaque source
+    	*/
 		void SendOnLookerBees(std::vector <int> probabilite);										//	OK
+		/*! \brief CalculateProbabilities
+    	* MyAlgorithm class CalculateProbabilities
+    	*/
 		std::vector <int> CalculateProbabilities() const;											//	OK
+		/*! \brief sendScoutBees
+    	* MyAlgorithm class sendScoutBees
+    	*/
 		void sendScoutBees();																		//	OK
+		/*! \brief Evaluate
+    	* MyAlgorithm class Evaluate
+    	*/
 		void evaluate();																			//	OK
-
-
-
-																			
-		
-		
-		
 
 	private:
 		vector<Solution*> 		d_solutions;     													//		Abeilles 				d_setup.population_size
