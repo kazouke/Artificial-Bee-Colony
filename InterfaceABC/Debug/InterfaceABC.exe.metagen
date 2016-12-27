@@ -18,4 +18,5 @@ Class InterfaceABC.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    CreerSetUp(Int32, Int32, Int32, Int32): PrivateScope, Public, HideBySig
+    CreerSetUp(UInt32, UInt32, UInt32, UInt32): PrivateScope, Public, HideBySig
+    choixFonction(Int32* IsImplicitlyDereferenced, Int32* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig

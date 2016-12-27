@@ -16,7 +16,7 @@ std::ostream& operator<< (std::ostream& os, const Solution& sol) {
 	return os;
 }
 
-std::istream& operator>> (std::istream& is, Solution& sol) {
+std::istream& operator >> (std::istream& is, Solution& sol) {
 	is >> sol._current_fitness;
 	return is;
 }
@@ -62,7 +62,7 @@ std::vector<double>& Solution::solution() {
 	return _solution;
 }
 
-double Solution::position(const int index) const{
+double Solution::position(const int index) const {
 	return _solution[index];
 }
 
@@ -70,7 +70,7 @@ void Solution::position(const int index, const double value) {
 	_solution[index] = value;
 }
 
-double Solution::maxSol() const {
+double Solution::maxSol() const { //Pas ouf il faudrait utiliser la valeur absolue, et pourquoi on a des sources de nourriture négatives ?
 	double max = _solution[0];
 	if (max<0) max *= -1;
 	for (int i = 1; i < _solution.size(); i++)

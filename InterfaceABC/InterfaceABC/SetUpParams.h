@@ -14,7 +14,7 @@ private:
 
 public:
 	SetUpParams() = delete;
-	SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize);
+	SetUpParams(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize);
 	SetUpParams(const SetUpParams & setup);
 	~SetUpParams() = default;
 

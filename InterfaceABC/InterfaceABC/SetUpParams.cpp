@@ -1,7 +1,7 @@
 #include "SetUpParams.h"
 
 //Constructeur
-SetUpParams::SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize) :
+SetUpParams::SetUpParams(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize) :
 _independent_runs{ nbRuns },
 _nb_evolution_steps{ nbEvoSteps },
 _population_size{ popSize },
