@@ -15,7 +15,7 @@ namespace InterfaceABC {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
-		void CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize);
+		void CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize, unsigned int maxTrial);
 		Fonction choixFonction(int&xmin, int&xmax);
 		MyForm(void)
 		{
@@ -57,6 +57,8 @@ namespace InterfaceABC {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown4;
 	private: System::Windows::Forms::Label^  label3;
 
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown5;
+
 	protected:
 
 	private:
@@ -72,6 +74,9 @@ namespace InterfaceABC {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+
+			this->numericUpDown5 = (gcnew System::Windows::Forms::NumericUpDown()); 
+
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->numericUpDown4 = (gcnew System::Windows::Forms::NumericUpDown());
@@ -87,6 +92,7 @@ namespace InterfaceABC {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
@@ -105,6 +111,8 @@ namespace InterfaceABC {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->numericUpDown5);
+
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->numericUpDown4);
 			this->groupBox1->Controls->Add(this->comboBox1);
@@ -123,6 +131,14 @@ namespace InterfaceABC {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Control Parameters";
 			// 
+			// numericUpDown5
+			// 
+			this->numericUpDown5->Location = System::Drawing::Point(180, 100);
+			this->numericUpDown5->Name = L"numericUpDown5";
+			this->numericUpDown5->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown5->TabIndex = 25;
+			this->numericUpDown5->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
+			// 
 			// numericUpDown4
 			// 
 			this->numericUpDown4->Location = System::Drawing::Point(116, 71);
@@ -135,7 +151,7 @@ namespace InterfaceABC {
 			// 
 			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Ackley", L"Rastrigin", L"Rosenbrock" });
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(6) { L"Ackley", L"Rastrigin", L"Rosenbrock",L"Schwefel",L"Schaffer",L"Weierstrass" });
 			this->comboBox1->Location = System::Drawing::Point(9, 173);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(160, 21);
@@ -243,6 +259,7 @@ namespace InterfaceABC {
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->EndInit(); 
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
@@ -257,7 +274,7 @@ namespace InterfaceABC {
 
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	CreerSetUp((int)numericUpDown3->Value, (int)numericUpDown2->Value, (int)numericUpDown1->Value, (int)numericUpDown4->Value);
+	CreerSetUp((int)numericUpDown3->Value, (int)numericUpDown2->Value, (int)numericUpDown1->Value, (int)numericUpDown4->Value, (int)numericUpDown5->Value);
 }
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
 }

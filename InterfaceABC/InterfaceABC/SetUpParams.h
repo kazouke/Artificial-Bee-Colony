@@ -11,10 +11,11 @@ private:
 	unsigned int   _nb_evolution_steps;       // number of iterations per run
 	unsigned int   _population_size;		// number of solutions in the population
 	unsigned int   _solution_size;	        // size of each particle
+	unsigned int _max_trial;				//max number of trials
 
 public:
 	SetUpParams() = delete;
-	SetUpParams(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize);
+	SetUpParams(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize, unsigned int maxTrial);
 	SetUpParams(const SetUpParams & setup);
 	~SetUpParams() = default;
 
@@ -26,6 +27,7 @@ public:
 	const unsigned int   nb_evolution_steps() const;
 	const unsigned int   population_size() const;
 	const unsigned int   solution_size() const;
+	const unsigned int   max_trial() const;
 
 };
 

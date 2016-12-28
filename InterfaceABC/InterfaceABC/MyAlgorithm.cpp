@@ -9,8 +9,6 @@ using std::cout;
 using std::setw;
 using std::endl;
 
-const int MAX_TRIAL = 100;
-
 //-------------------Constructeur / Destructeur --------------------------------
 
 ABC::ABC(const Problem& pbm, const SetUpParams& setup) :d_solutions{}, d_fitnessValues{}, d_setup{ setup }, d_upperCost{}, d_lowerCost{}
@@ -150,11 +148,11 @@ std::vector <int> ABC::CalculateProbabilities() const
 	return probabilite;
 }
 
-void ABC::sendScoutBees() //Cherche et reinitialise la source qui a le moins evolué si plus de MAX_TRIAL (100)
+void ABC::sendScoutBees() //Cherche et reinitialise la source qui a le moins evolué si plus de d_setup.max_trial() (100)
 {
 	int maxIndex = 0;
 	for (int i = 1; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial()) maxIndex = i;
-	if (d_solutions[maxIndex]->trial() >= MAX_TRIAL)	d_solutions[maxIndex]->initialize();
+	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())	d_solutions[maxIndex]->initialize();
 }
 
 //-------------------Fonction de Tri-----------------------------

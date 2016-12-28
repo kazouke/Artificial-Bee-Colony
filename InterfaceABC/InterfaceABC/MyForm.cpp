@@ -10,8 +10,6 @@
 using namespace System;
 using namespace System::Windows::Forms;
 
-Fonction F = somme_ackley;
-
 Fonction InterfaceABC::MyForm::choixFonction(int&xmin, int&xmax)
 {
 	if (comboBox1->Text == L"Ackley")
@@ -32,14 +30,32 @@ Fonction InterfaceABC::MyForm::choixFonction(int&xmin, int&xmax)
 		xmax = 10;
 		return somme_rosenbrock;
 	}
+	else if (comboBox1->Text == L"Schwefel")
+	{
+		xmin=-500;
+		xmax=500;
+		return schwefel;
+	}
+	else if (comboBox1->Text == L"Schaffer")
+	{
+		xmin=-100;
+		xmax=100;
+		return schaffer;
+	}
+	else if (comboBox1->Text == L"Weierstrass")
+	{
+		xmin=-10;
+		xmax=10;
+		return weierstrass;
+	}
 }
 
-void InterfaceABC::MyForm::CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize) {
+void InterfaceABC::MyForm::CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize, unsigned int maxTrial) {
 	if (comboBox1->Text != "")
 	{
-		SetUpParams sup{ nbRuns, nbEvoSteps, popSize, solSize };
+		SetUpParams sup{ nbRuns, nbEvoSteps, popSize, solSize, maxTrial};
 		int xmin, xmax;
-		F = choixFonction(xmin, xmax);
+		Fonction F = choixFonction(xmin, xmax);
 		Problem P(xmin, xmax, 30, F);
 		ABC A{ P, sup };
 		freopen("myfile.txt", "w", stdout);
