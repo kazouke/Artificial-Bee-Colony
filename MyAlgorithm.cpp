@@ -1,16 +1,11 @@
 #include "MyAlgorithm.h"
-
-double random()
-{
-	return (double) rand() / (double) RAND_MAX;
-}
+#include "bench.h"
 
 using std::cout;
 using std::setw;
 using std::endl;
 
 int TEST_LEVEL;
-const int MAX_TRIAL=100;
 
 //-------------------Constructeur / Destructeur --------------------------------
 
@@ -172,7 +167,7 @@ void ABC::sendScoutBees()
 			maxIndex=i;
 		}
 	}
-	if(d_solutions[maxIndex]->trial()>=MAX_TRIAL)
+	if(d_solutions[maxIndex]->trial()>=d_setup.max_trial())
 			d_solutions[maxIndex]->initialize();
 }
 

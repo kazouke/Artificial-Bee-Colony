@@ -1,18 +1,20 @@
 #include "SetUpParams.h"
 
 //Constructeur
-SetUpParams::SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize) :
+SetUpParams::SetUpParams(int nbRuns, int nbEvoSteps, int popSize, int solSize, int maxTrial) :
     _independent_runs{nbRuns},
     _nb_evolution_steps{nbEvoSteps},
     _population_size{popSize},
-    _solution_size{solSize}
+    _solution_size{solSize},
+    _max_trial{maxTrial}
 {}
 
 SetUpParams::SetUpParams(const SetUpParams & setup):
     _independent_runs{setup._independent_runs},
     _nb_evolution_steps{setup._nb_evolution_steps},
     _population_size{setup._population_size},
-    _solution_size{setup._solution_size}
+    _solution_size{setup._solution_size},
+    _max_trial{setup._max_trial}
 {}
 
 
@@ -44,5 +46,9 @@ const unsigned int SetUpParams::population_size() const
 const unsigned int SetUpParams::solution_size() const
 {
 	return _solution_size;
+}
+const unsigned int SetUpParams::max_trial() const
+{
+	return _max_trial;
 }
 

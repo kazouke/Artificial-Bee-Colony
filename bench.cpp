@@ -2,6 +2,11 @@
 #include <cmath>
 #include "bench.h"
 
+double random()
+{
+	return (double) rand() / (double) RAND_MAX;
+}
+
 double rosenbrock(const vector<double> &individu, int d)
 {
     double a=individu[d+1]-individu[d]*individu[d],
@@ -80,21 +85,3 @@ double weierstrass(const vector<double> &individu)
 	return val - individu.size() * temp;
 }
 
-double proba_alea()
-{
-    return 1.0*rand()/RAND_MAX;
-}
-
-double aleatoire(double a, double b)
-{
-    return (proba_alea()-b/(b-a))*(b-a);
-}
-
-void pivotement(vector<double> &Delta, int dim)
-{
-    Delta.clear();
-	for (int i = 0; i < dim; ++i)
-	{
-		Delta.push_back((proba_alea()-.5)*2);
-	}
-}
