@@ -52,7 +52,7 @@ double ABC::evolution()
 			SendOnLookerBees(CalculateProbabilities());
 			trier();
 			sendScoutBees();
-			cout <<"Run "<<i+1<<" evolution "<<j+1<<std::endl;
+			cout <<"Run "<<setw(3)<<i+1<<" evolution "<<setw(6)<<j+1<<" : "<<best_cost()<<std::endl;
 		}
 		
 		moyenne += best_cost() / d_setup.independent_runs();
