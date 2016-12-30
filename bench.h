@@ -20,6 +20,8 @@ double schwefel(const vector<double> &individu);
 double schaffer(const vector<double> &individu);
 double weierstrass(const vector<double> &individu);
 
-double random();
+double proba_alea();
+double aleatoire(double a, double b);
+void pivotement(vector<double> &Delta, int dim);
 
 #endif 

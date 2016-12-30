@@ -8,7 +8,7 @@
 
 Fonction choixFonction(int&xmin, int&xmax)
 {
-	std::cout<<"1. Ackley"<<std::endl;
+	/*std::cout<<"1. Ackley"<<std::endl;
 	std::cout<<"2. Rastrigin"<<std::endl;
 	std::cout<<"3. Rosenbrock"<<std::endl;
 	std::cout<<"4. Schwefel"<<std::endl;
@@ -53,16 +53,20 @@ Fonction choixFonction(int&xmin, int&xmax)
 		xmin=-10;
 		xmax=10;
 		return weierstrass;
-	}
+	}*/
+	xmin=-32.768;
+	xmax=32.768;
+	return somme_ackley;
 }
 
 int nbIte()
 {
-	std::cout<<"Nombre d'Iteration (30) : ";
+	/*std::cout<<"Nombre d'Iteration (30) : ";
 	int i;
 	std::cin>>i;
 	while(i<1 || i>30) std::cin>>i;
-	return i;
+	return i;*/
+	return 1;
 }
 
 int nbEvo()
@@ -76,11 +80,12 @@ int nbEvo()
 
 int nbMaxTrial()
 {
-	std::cout<<"Nombre d'essais avant de renouveler une solution (100) : ";
+	/*std::cout<<"Nombre d'essais avant de renouveler une solution (100) : ";
 	int i;
 	std::cin>>i;
 	while(i<1 || i>100) std::cin>>i;
-	return i;
+	return i;*/
+	return 100;
 }
 
 int main(int argc, char** argv) {
