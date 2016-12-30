@@ -100,7 +100,7 @@ void ABC::BeesWork(int param2change, int i)
 	double ObjValSol = newsol->FunctionFitness();
 	double FitnessSol = newsol->CalculateFitness(ObjValSol);
 
-	if (FitnessSol>d_fitnessValues[i].fitness)
+	if (FitnessSol<d_fitnessValues[i].fitness)
 	{
 		delete d_solutions[i];
 		d_solutions[i] = newsol;
