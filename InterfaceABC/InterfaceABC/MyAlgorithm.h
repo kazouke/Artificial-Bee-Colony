@@ -84,7 +84,6 @@ private:
 	vector<Solution*> 		d_solutions;     													//		Abeilles 				d_setup.population_size
 	vector<struct particle> d_fitnessValues;													//		Evaluation des abeilles	d_setup.population_size
 	const SetUpParams 		d_setup;															//		Parametres
-	int 					d_upperCost, d_lowerCost;											//		Position de la meilleur / pire fitness->Peu utile car les valeurs sont triées
 
 	void trier();
 	void BeesWork(int param2change, int i);														//	OK	QuickSort

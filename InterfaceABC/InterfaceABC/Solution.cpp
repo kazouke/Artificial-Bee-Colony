@@ -54,12 +54,12 @@ void Solution::initialize() {
 }
 
 double Solution::FunctionFitness() {
-	_function_fitness = (_pbm.f())(_solution);
 	return _function_fitness;
 }
 
 double Solution::SolutionFitness() {
-	return _current_fitness;
+	return (_pbm.f())(_solution);
+	//return _current_fitness; bug ?
 }
 
 unsigned int Solution::size() const {

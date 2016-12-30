@@ -11,7 +11,7 @@ using std::endl;
 
 //-------------------Constructeur / Destructeur --------------------------------
 
-ABC::ABC(const Problem& pbm, const SetUpParams& setup) :d_solutions{}, d_fitnessValues{}, d_setup{ setup }, d_upperCost{}, d_lowerCost{}
+ABC::ABC(const Problem& pbm, const SetUpParams& setup) :d_solutions{}, d_fitnessValues{}, d_setup{ setup }
 {
 	d_solutions.resize(d_setup.population_size());
 	d_fitnessValues.resize(d_setup.population_size());
@@ -30,8 +30,18 @@ const vector<Solution*>& ABC::solutions() const { return d_solutions; }
 vector<struct particle>&  ABC::fitness_values() { return d_fitnessValues; }
 Solution& ABC::solution(const int index) const { return *(d_solutions[index]); }
 double ABC::fitness(const int index) const { return d_fitnessValues[index].fitness; }
-int ABC::upper_cost() const { return d_upperCost; }											//Tableau trié ->d_setup.population_size()-1 
-int ABC::lower_cost() const { return d_lowerCost; }											//Tableau trié ->0
+int ABC::upper_cost() const
+{
+	double max = 0;
+	for (int i = 1; i < 30; i++) if (d_fitnessValues[i].fitness > d_fitnessValues[max].fitness) max = i;
+	return max;
+}
+int ABC::lower_cost() const
+{
+	double min = 0;
+	for (int i = 1; i < 30; i++) if (d_fitnessValues[i].fitness < d_fitnessValues[min].fitness) min = i;
+	return min;
+}											//Tableau trié ->0
 double ABC::best_cost()  const { return fitness(lower_cost()); }
 double ABC::worst_cost() const { return fitness(upper_cost()); }
 Solution& ABC::best_solution()  const { return solution(best_cost()); }
@@ -51,7 +61,7 @@ double ABC::evolution()
 		{
 			sendEmployedBees();
 			SendOnLookerBees(CalculateProbabilities());
-			trier();
+			//trier();
 			sendScoutBees();
 			cout <<"Run "<<setw(3)<<i+1<<" evolution "<<setw(6)<<j+1<<" : "<<setw(10)<<best_cost()<<std::endl;
 		}
@@ -76,7 +86,7 @@ void ABC::initialize()
 		d_solutions[i]->initialize();
 		d_fitnessValues[i] = particle{ i,d_solutions[i]->SolutionFitness() };
 	}
-	trier();
+	//trier();
 }
 
 void ABC::BeesWork(int param2change, int i)
@@ -97,8 +107,10 @@ void ABC::BeesWork(int param2change, int i)
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
-	double ObjValSol = newsol->FunctionFitness();
-	double FitnessSol = newsol->CalculateFitness(ObjValSol);
+	//?
+	//double ObjValSol = newsol->FunctionFitness();
+	//double FitnessSol = newsol->CalculateFitness(ObjValSol);
+	double FitnessSol = newsol->SolutionFitness();
 
 	if (FitnessSol<d_fitnessValues[i].fitness)
 	{
@@ -160,14 +172,19 @@ std::vector <int> ABC::CalculateProbabilities() const
 
 void ABC::sendScoutBees() //Cherche et reinitialise la source qui a le moins evolué si plus de d_setup.max_trial() (100)
 {
+	int best = lower_cost();
 	int maxIndex = 0;
-	for (int i = 1; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial()) maxIndex = i;
-	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())	d_solutions[maxIndex]->initialize();
+	for (int i = 1; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial() && i != best) maxIndex = i;
+	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())
+	{
+		d_solutions[maxIndex]->initialize();
+		d_fitnessValues[maxIndex] = particle{ maxIndex,d_solutions[maxIndex]->SolutionFitness() };
+	}
 }
 
 //-------------------Fonction de Tri-----------------------------
 //------------Tri croissant QuickSort vu en cours----------------
-
+/*
 void ABC::trier() { QuickSort(0, d_setup.population_size()); d_lowerCost = 0;	d_upperCost = d_setup.population_size() - 1; }
 
 int ABC::partition(int gauche, int droite)
@@ -180,3 +197,4 @@ int ABC::partition(int gauche, int droite)
 }
 
 void ABC::QuickSort(int gauche, int droite) { int r; if (gauche<droite) { r = partition(gauche, droite); QuickSort(gauche, r); QuickSort(r + 1, droite); } }
+*/
