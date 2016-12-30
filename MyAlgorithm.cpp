@@ -16,7 +16,7 @@ ABC::ABC(const Problem& pbm,const SetUpParams& setup):d_solutions{}, d_fitnessVa
 	for(int i=0;i<d_setup.population_size();++i)
 	{
 		d_solutions[i]=new Solution{pbm};
-        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
+        d_fitnessValues[i]=particle {i,d_solutions[i]->SolutionFitness()};
 	}
 }
 
@@ -72,7 +72,7 @@ void ABC::initialize()
 	for(int i=0;i<d_solutions.size();++i)
     {
         d_solutions[i]->initialize();
-        d_fitnessValues[i]=particle {i,d_solutions[i]->fitness()};
+        d_fitnessValues[i]=particle {i,d_solutions[i]->SolutionFitness()};
         if (TEST_LEVEL>=2) cout<<setw(3)<<i+1<<'\t'<<d_fitnessValues[i].fitness<<endl;
     }
     if (TEST_LEVEL>=2) {cout<<"--------------Fin Initialize----------------"<<endl;system("pause");}
@@ -92,14 +92,20 @@ void ABC::BeesWork(int param2change,int i)
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
-	double FitnessSol=newsol->fitness();
-	if (FitnessSol<d_fitnessValues[i].fitness)
+	double ObjValSol=newsol->FunctionFitness();/////////////////////
+	double FitnessSol=newsol->CalculateFitness(ObjValSol);//////////////////
+	
+	if (FitnessSol>d_fitnessValues[i].fitness)
 	{
-		delete d_solutions[i];d_solutions[i]=newsol;newsol=nullptr;
+		delete d_solutions[i];
+		d_solutions[i]=newsol;
+		newsol=nullptr;
 	    d_fitnessValues[i].fitness=FitnessSol;
 	}
-    else	d_solutions[i]->incrementerTrial();
+    else
+		d_solutions[i]->incrementerTrial();
 	delete newsol;
+	
 }
 
 void ABC::sendEmployedBees()
@@ -107,7 +113,7 @@ void ABC::sendEmployedBees()
 	if (TEST_LEVEL>=2) cout<<"----------------SendEmployedBees-----------------"<<endl;
 	for (int i=0;i<d_setup.population_size();i++)
 	{
-		//On change un parametre de maniere completement aleatoire
+		//On change un parametre de maniere completement aleatoire        
         int param2change=random()*(d_setup.solution_size()-1);
         BeesWork(param2change,i);
     }
