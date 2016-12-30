@@ -1,12 +1,12 @@
 ﻿  MyForm.cpp
-MyForm.cpp(19): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
-MyForm.cpp(20): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
-MyForm.cpp(25): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
-MyForm.cpp(26): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
-MyForm.cpp(45): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+MyForm.cpp(17): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+MyForm.cpp(18): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+MyForm.cpp(23): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+MyForm.cpp(24): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+MyForm.cpp(61): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(240): note: voir la déclaration de 'freopen'
-MyForm.cpp(53): warning C4829: Paramètres potentiellement incorrects dans la fonction main. Utilisez 'int main(Platform::Array<Platform::String^>^ argv)' à la place
-MyForm.cpp(57): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
-c:\users\wettel\documents\github\artificial-bee-colony\interfaceabc\interfaceabc\myform.cpp(35): warning C4715: 'InterfaceABC::MyForm::choixFonction' : les chemins de contrôle ne retournent pas tous une valeur
+MyForm.cpp(69): warning C4829: Paramètres potentiellement incorrects dans la fonction main. Utilisez 'int main(Platform::Array<Platform::String^>^ argv)' à la place
+MyForm.cpp(73): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
+c:\users\wettel\documents\github\artificial-bee-colony\interfaceabc\interfaceabc\myform.cpp(51): warning C4715: 'InterfaceABC::MyForm::choixFonction' : les chemins de contrôle ne retournent pas tous une valeur
   InterfaceABC.vcxproj -> C:\Users\Wettel\Documents\GitHub\Artificial-Bee-Colony\InterfaceABC\Debug\InterfaceABC.exe
   InterfaceABC.vcxproj -> C:\Users\Wettel\Documents\GitHub\Artificial-Bee-Colony\InterfaceABC\Debug\InterfaceABC.pdb (Full PDB)

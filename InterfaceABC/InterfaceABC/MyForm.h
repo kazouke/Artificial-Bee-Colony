@@ -58,6 +58,7 @@ namespace InterfaceABC {
 	private: System::Windows::Forms::Label^  label3;
 
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown5;
+	private: System::Windows::Forms::Label^  label4;
 
 	protected:
 
@@ -74,11 +75,10 @@ namespace InterfaceABC {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-
-			this->numericUpDown5 = (gcnew System::Windows::Forms::NumericUpDown()); 
-
+			this->numericUpDown5 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown4 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
@@ -90,14 +90,22 @@ namespace InterfaceABC {
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->groupBox1->SuspendLayout();
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->BeginInit();
+			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
+			// 
+			// numericUpDown5
+			// 
+			this->numericUpDown5->Location = System::Drawing::Point(116, 123);
+			this->numericUpDown5->Name = L"numericUpDown5";
+			this->numericUpDown5->Size = System::Drawing::Size(53, 20);
+			this->numericUpDown5->TabIndex = 25;
+			this->numericUpDown5->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
 			// 
 			// button1
 			// 
@@ -111,8 +119,8 @@ namespace InterfaceABC {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label4);
 			this->groupBox1->Controls->Add(this->numericUpDown5);
-
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->numericUpDown4);
 			this->groupBox1->Controls->Add(this->comboBox1);
@@ -131,13 +139,14 @@ namespace InterfaceABC {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Control Parameters";
 			// 
-			// numericUpDown5
+			// label3
 			// 
-			this->numericUpDown5->Location = System::Drawing::Point(180, 100);
-			this->numericUpDown5->Name = L"numericUpDown5";
-			this->numericUpDown5->Size = System::Drawing::Size(53, 20);
-			this->numericUpDown5->TabIndex = 25;
-			this->numericUpDown5->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(6, 157);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(102, 13);
+			this->label3->TabIndex = 11;
+			this->label3->Text = L"Benchmark function";
 			// 
 			// numericUpDown4
 			// 
@@ -151,7 +160,10 @@ namespace InterfaceABC {
 			// 
 			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(6) { L"Ackley", L"Rastrigin", L"Rosenbrock",L"Schwefel",L"Schaffer",L"Weierstrass" });
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(6) {
+				L"Ackley", L"Rastrigin", L"Rosenbrock", L"Schwefel",
+					L"Schaffer", L"Weierstrass"
+			});
 			this->comboBox1->Location = System::Drawing::Point(9, 173);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(160, 21);
@@ -237,14 +249,15 @@ namespace InterfaceABC {
 			this->label7->TabIndex = 4;
 			this->label7->Text = L"Results";
 			// 
-			// label3
+			// label4
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(6, 157);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(102, 13);
-			this->label3->TabIndex = 11;
-			this->label3->Text = L"Benchmark function";
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(6, 125);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(54, 13);
+			this->label4->TabIndex = 26;
+			this->label4->Text = L"# of Trials";
+			this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
 			// 
 			// MyForm
 			// 
@@ -257,9 +270,9 @@ namespace InterfaceABC {
 			this->Name = L"MyForm";
 			this->Text = L"Arificial Bee Colony Algorithm Interface";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->EndInit();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->EndInit(); 
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
@@ -279,6 +292,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
