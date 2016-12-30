@@ -22,7 +22,10 @@ public:
 	bool operator!= (const Solution& sol) const;
 
 	void initialize(); // nourriture à initialiser = lower limit + rand(0,1) * (upper limit - lower limit)
-	double fitness();
+	
+	double CalculateFitness(double fun);
+	double FunctionFitness();
+	double SolutionFitness();
 
 	unsigned int size() const;
 	double maxSol() const;
@@ -38,6 +41,7 @@ public:
 
 private:
 	std::vector<double> _solution;
+	double _function_fitness;
 	double _current_fitness;
 	const Problem& _pbm;
 	int d_trial;

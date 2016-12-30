@@ -1,11 +1,11 @@
 #include "Solution.h"
 
-Solution::Solution(const Problem& pbm) : _solution{}, _current_fitness{ INT_MAX }, _pbm{ pbm }, d_trial{ 0 } {
+Solution::Solution(const Problem& pbm) : _solution{}, _current_fitness{ INT_MAX }, _function_fitness{ INT_MAX }, _pbm{ pbm }, d_trial{ 0 } {
 	_solution.resize(pbm.dimension());
 	initialize();
 }
 
-Solution::Solution(const Solution& sol) : _solution{}, _current_fitness{ sol._current_fitness }, _pbm{ sol._pbm }, d_trial{ 0 } {
+Solution::Solution(const Solution& sol) : _solution{}, _current_fitness{ sol._current_fitness }, _function_fitness{ sol._function_fitness }, _pbm{ sol._pbm }, d_trial{ 0 } {
 	_solution = sol._solution;
 }
 
@@ -28,11 +28,12 @@ const Problem& Solution::pbm() const {
 Solution& Solution::operator= (const Solution& sol) {
 	_solution = sol._solution;
 	_current_fitness = sol._current_fitness;
+	_function_fitness = sol._function_fitness;
 	return *(this);
 }
 
 bool Solution::operator== (const Solution& sol) const {
-	return _solution == sol._solution && _current_fitness == sol._current_fitness && _pbm == sol._pbm;
+	return _solution == sol._solution && _current_fitness == sol._current_fitness  && _function_fitness == sol._function_fitness && _pbm == sol._pbm;
 }
 
 bool Solution::operator!= (const Solution& sol) const {
@@ -43,14 +44,21 @@ void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
 		double r = 1.0*rand() / (RAND_MAX + 1.0);
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
-		//std::cout << "Qualité : "<<_solution[i] << std::endl;
 	}
+
+
+	_function_fitness = (_pbm.f())(_solution);
+	_current_fitness = CalculateFitness(_function_fitness);
+
 	d_trial = 0;
 }
 
-double Solution::fitness() {
-	_current_fitness = (_pbm.f())(_solution);
-	//std::cout <<"Fitness : " <<_current_fitness << std::endl;
+double Solution::FunctionFitness() {
+	_function_fitness = (_pbm.f())(_solution);
+	return _function_fitness;
+}
+
+double Solution::SolutionFitness() {
 	return _current_fitness;
 }
 
@@ -89,4 +97,18 @@ void Solution::incrementerTrial()
 int Solution::trial() const
 {
 	return d_trial;
+}
+
+double Solution::CalculateFitness(double fun)
+{
+	double result = 0;
+	if (fun >= 0)
+	{
+		result = 1 / (fun + 1);
+	}
+	else
+	{
+		result = 1 + abs(fun);
+	}
+	return result;
 }

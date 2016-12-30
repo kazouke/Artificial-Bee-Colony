@@ -18,7 +18,7 @@ ABC::ABC(const Problem& pbm, const SetUpParams& setup) :d_solutions{}, d_fitness
 	for (int i = 0; i<d_setup.population_size(); ++i)
 	{
 		d_solutions[i] = new Solution{ pbm };
-		d_fitnessValues[i] = particle{ i,d_solutions[i]->fitness() };
+		d_fitnessValues[i] = particle{ i,d_solutions[i]->SolutionFitness() };
 	}
 }
 
@@ -74,7 +74,7 @@ void ABC::initialize()
 	for (int i = 0; i<d_solutions.size(); ++i)
 	{
 		d_solutions[i]->initialize();
-		d_fitnessValues[i] = particle{ i,d_solutions[i]->fitness() };
+		d_fitnessValues[i] = particle{ i,d_solutions[i]->SolutionFitness() };
 	}
 	trier();
 }
@@ -97,14 +97,18 @@ void ABC::BeesWork(int param2change, int i)
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
-	//La fitness de la copie de l'abeille avec une nouvelle source est calculée
-	double FitnessSol = newsol->fitness();
-	if (FitnessSol<d_fitnessValues[i].fitness) //Si la nouvelle source est meilleur, la copie remplace l'ancienne
+	double ObjValSol = newsol->FunctionFitness();
+	double FitnessSol = newsol->CalculateFitness(ObjValSol);
+
+	if (FitnessSol>d_fitnessValues[i].fitness)
 	{
-		delete d_solutions[i]; d_solutions[i] = newsol; newsol = nullptr;
+		delete d_solutions[i];
+		d_solutions[i] = newsol;
+		newsol = nullptr;
 		d_fitnessValues[i].fitness = FitnessSol;
-	}//Sinon son compteur de non-évolution augmente
-	else	d_solutions[i]->incrementerTrial();
+	}
+	else
+		d_solutions[i]->incrementerTrial();
 	delete newsol;
 }
 
