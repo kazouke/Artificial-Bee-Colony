@@ -61,7 +61,7 @@ double ABC::evolution()
 		if (meilleur>best_cost())	meilleur = best_cost();		//nouveau meilleur
 	}
 	double ecartype=0;
-	for (int i=1; i<=resultats.size();++i) ecartype+=sqrt(1.0/i*pow(resultats[i]-moyenne,2));
+	for (int i=0; i<resultats.size();++i) ecartype+=sqrt(1.0/(i+1)*pow(resultats[i]-moyenne,2));
 	
 	cout << "Moyenne     = " << std::setprecision(10) << moyenne  << endl;
 	cout << "Ecart Type  = " << std::setprecision(10) << ecartype << endl;
