@@ -42,6 +42,7 @@ const SetUpParams& ABC::setup() const { return d_setup; }
 
 double ABC::evolution()
 {
+	std::vector<double> resultats;
 	std::fixed; double moyenne = 0; double meilleur = INT_MAX;
 	for (int i = 0; i<d_setup.independent_runs(); ++i)
 	{
@@ -56,10 +57,15 @@ double ABC::evolution()
 		}
 		cout<<std::endl;
 		moyenne += best_cost() / d_setup.independent_runs();
+		resultats.push_back(best_cost());
 		if (meilleur>best_cost())	meilleur = best_cost();		//nouveau meilleur
 	}
-	cout << "Moyenne  = " << std::setprecision(10) << moyenne << endl;
-	cout << "Meilleur = " << std::setprecision(10) << meilleur<< endl;
+	double ecartype=0;
+	for (int i=1; i<=resultats.size();++i) ecartype+=sqrt(1.0/i*pow(resultats[i]-moyenne,2));
+	
+	cout << "Moyenne     = " << std::setprecision(10) << moyenne  << endl;
+	cout << "Ecart Type  = " << std::setprecision(10) << ecartype << endl;
+	cout << "Meilleur    = " << std::setprecision(10) << meilleur << endl;
 	return meilleur;
 }
 
