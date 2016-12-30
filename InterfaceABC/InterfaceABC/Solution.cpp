@@ -42,7 +42,7 @@ bool Solution::operator!= (const Solution& sol) const {
 
 void Solution::initialize() {
 	for (int i = 0; i < _solution.size(); i++) {
-		double r = 1.0*rand() / (RAND_MAX + 1.0);
+		double r = 1.0*rand() / RAND_MAX;
 		_solution[i] = r * (_pbm.upperLimit() - _pbm.lowerLimit()) + _pbm.lowerLimit();
 	}
 
