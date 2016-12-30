@@ -179,6 +179,7 @@ namespace InterfaceABC {
 			this->comboBox1->Size = System::Drawing::Size(160, 21);
 			this->comboBox1->TabIndex = 10;
 			this->comboBox1->Tag = L"";
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_SelectedIndexChanged);
 			// 
 			// label8
 			// 
@@ -294,6 +295,8 @@ private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

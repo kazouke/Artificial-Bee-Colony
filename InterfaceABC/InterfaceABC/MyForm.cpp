@@ -53,6 +53,8 @@ Fonction InterfaceABC::MyForm::choixFonction(int&xmin, int&xmax)
 void InterfaceABC::MyForm::CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSteps, unsigned int popSize, unsigned int solSize, unsigned int maxTrial) {
 	if (comboBox1->Text != "")
 	{
+		textBox3->Text = "Veuillez patientez... ";
+		Refresh();
 		SetUpParams sup{ nbRuns, nbEvoSteps, popSize, solSize, maxTrial};
 		int xmin, xmax;
 		Fonction F = choixFonction(xmin, xmax);

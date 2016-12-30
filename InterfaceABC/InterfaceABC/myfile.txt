@@ -30028,5 +30028,6 @@ Run  30 evolution    998 : 0.00963203
 Run  30 evolution    999 : 0.00963203
 Run  30 evolution   1000 : 0.00963203
 
-Moyenne  = 0.01230326935
-Meilleur = 3.201704853e-05
+Moyenne     = 0.01230326935
+Ecart Type  = 0.068872242
+Meilleur    = 3.201704853e-05
