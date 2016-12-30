@@ -102,9 +102,7 @@ int main(int argc, char** argv) {
 	int maxTrial=nbMaxTrial();
 	SetUpParams sup{iT, eVo, 30, 30,maxTrial};
 	ABC A{P,sup};
-	double best=A.evolution();
-	
-	std::cout<<"Best cost "<<best<<std::endl;
+	A.evolution();
 	system("pause");
 }
 

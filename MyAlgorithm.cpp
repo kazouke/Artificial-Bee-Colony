@@ -43,7 +43,7 @@ const SetUpParams& ABC::setup() const { return d_setup; }
 double ABC::evolution()
 {
 	std::vector<double> resultats;
-	std::fixed; double moyenne = 0; double meilleur = INT_MAX;
+	std::fixed; double moyenne = 0;// double meilleur = INT_MAX;
 	for (int i = 0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
@@ -56,17 +56,17 @@ double ABC::evolution()
 			cout <<"Run "<<setw(3)<<i+1<<" evolution "<<setw(6)<<j+1<<" : "<<setw(10)<<best_cost()<<'\t'<<setw(10)<<worst_cost()<<std::endl;
 		}
 		cout<<std::endl;
-		moyenne += best_cost() / d_setup.independent_runs();
-		resultats.push_back(best_cost());
-		if (meilleur>best_cost())	meilleur = best_cost();		//nouveau meilleur
+		//moyenne += best_cost() / d_setup.independent_runs();
+		//resultats.push_back(best_cost());
+		//if (meilleur>best_cost())	meilleur = best_cost();		//nouveau meilleur
 	}
 	double ecartype=0;
 	for (int i=0; i<resultats.size();++i) ecartype+=sqrt(1.0/(i+1)*pow(resultats[i]-moyenne,2));
 	
-	cout << "Moyenne     = " << std::setprecision(10) << moyenne  << endl;
-	cout << "Ecart Type  = " << std::setprecision(10) << ecartype << endl;
-	cout << "Meilleur    = " << std::setprecision(10) << meilleur << endl;
-	return meilleur;
+	//cout << "Moyenne     = " << std::setprecision(10) << moyenne  << endl;
+	//cout << "Ecart Type  = " << std::setprecision(10) << ecartype << endl;
+	//cout << "Meilleur    = " << std::setprecision(10) << meilleur << endl;
+	//return meilleur;
 }
 
 void ABC::initialize()
@@ -97,8 +97,10 @@ void ABC::BeesWork(int param2change, int i)
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
 	
-	double ObjValSol = newsol->FunctionFitness();
-	double FitnessSol = newsol->CalculateFitness(ObjValSol);
+	//ICI ?
+	//double ObjValSol = newsol->FunctionFitness();
+	//double FitnessSol = newsol->CalculateFitness(ObjValSol);
+	double FitnessSol=newsol->SolutionFitness();
 
 	if (FitnessSol<d_fitnessValues[i].fitness)
 	{
