@@ -30,8 +30,18 @@ const vector<Solution*>& ABC::solutions() const { return d_solutions; }
 vector<struct particle>&  ABC::fitness_values() { return d_fitnessValues; }
 Solution& ABC::solution(const int index) const { return *(d_solutions[index]); }
 double ABC::fitness(const int index) const { return d_fitnessValues[index].fitness; }
-int ABC::upper_cost() const { return d_upperCost; }											//Tableau trié ->d_setup.population_size()-1 
-int ABC::lower_cost() const { return d_lowerCost; }											//Tableau trié ->0
+int ABC::upper_cost() const
+{
+	double max = 0;
+	for (int i = 1; i < 30; i++) if (d_fitnessValues[i].fitness > d_fitnessValues[max].fitness) max = i;
+	return max;
+}
+int ABC::lower_cost() const
+{
+	double max = 0;
+	for (int i = 1; i < 30; i++) if (d_fitnessValues[i].fitness < d_fitnessValues[max].fitness) max = i;
+	return max;
+}											//Tableau trié ->0
 double ABC::best_cost()  const { return fitness(lower_cost()); }
 double ABC::worst_cost() const { return fitness(upper_cost()); }
 Solution& ABC::best_solution()  const { return solution(best_cost()); }
@@ -47,12 +57,13 @@ double ABC::evolution()
 	for (int i = 0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
+		cout <<"Run "<<setw(3)<<i+1<<" evolution "<<setw(6)<<0<<" : "<<setw(10)<<best_cost()<<'\t'<<setw(10)<<worst_cost()<<std::endl;
 		for (int j = 0; j<d_setup.nb_evolution_steps() && best_cost()>0; ++j)
 		{
 			sendEmployedBees();
 			SendOnLookerBees(CalculateProbabilities());
-			trier();
 			sendScoutBees();
+			//trier();
 			cout <<"Run "<<setw(3)<<i+1<<" evolution "<<setw(6)<<j+1<<" : "<<setw(10)<<best_cost()<<'\t'<<setw(10)<<worst_cost()<<std::endl;
 		}
 		cout<<std::endl;
@@ -76,7 +87,7 @@ void ABC::initialize()
 		d_solutions[i]->initialize();
 		d_fitnessValues[i] = particle{ i,d_solutions[i]->SolutionFitness() };
 	}
-	trier();
+	//trier();
 }
 
 void ABC::BeesWork(int param2change, int i)
@@ -91,8 +102,9 @@ void ABC::BeesWork(int param2change, int i)
 	//La copie de l'abeille i change une de ses sources avec un mixte de sa source et celle de l'abeille voisine
 	double x = newsol->position(param2change);
 	double y = d_solutions[neighbour]->position(param2change);
+	
 	newsol->position(param2change, x + (x - y)*(random() * 2 - 1) * 2);
-
+	
 	//La source / solution doit être dans l'intervalle du problème
 	if (newsol->position(param2change)<newsol->pbm().lowerLimit()) newsol->position(param2change, newsol->pbm().lowerLimit());
 	if (newsol->position(param2change)>newsol->pbm().upperLimit()) newsol->position(param2change, newsol->pbm().upperLimit());
@@ -146,8 +158,7 @@ std::vector <int> ABC::CalculateProbabilities() const
 
 		for (int j = 0; j<d_setup.solution_size(); ++j)
 		{
-			double test = 0.9 * d_solutions[i]->position(j) / maxsol + 0.1;
-			if (test<0) test *= -1;
+			double test = abs(0.9 * d_solutions[i]->position(j) / maxsol + 0.1);
 
 			double r = random();
 			if (r<test)
@@ -160,16 +171,21 @@ std::vector <int> ABC::CalculateProbabilities() const
 	return probabilite;
 }
 
-void ABC::sendScoutBees() //Cherche et reinitialise la source qui a le moins evolué si plus de d_setup.max_trial() (100)
+void ABC::sendScoutBees()
 {
-	int maxIndex = 0;
-	for (int i = 1; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial()) maxIndex = i;
-	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())	d_solutions[maxIndex]->initialize();
+	int best=lower_cost();
+	int maxIndex = 1;
+	for (int i = 0; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial() && i!=best) maxIndex = i;
+	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())
+	{
+		d_solutions[maxIndex]->initialize();
+		d_fitnessValues[maxIndex] = particle{ maxIndex,d_solutions[maxIndex]->SolutionFitness() };
+	}
 }
 
 //-------------------Fonction de Tri-----------------------------
 //------------Tri croissant QuickSort vu en cours----------------
-
+/*
 void ABC::trier() { QuickSort(0, d_setup.population_size()); d_lowerCost = 0;	d_upperCost = d_setup.population_size() - 1; }
 
 int ABC::partition(int gauche, int droite)
@@ -182,3 +198,4 @@ int ABC::partition(int gauche, int droite)
 }
 
 void ABC::QuickSort(int gauche, int droite) { int r; if (gauche<droite) { r = partition(gauche, droite); QuickSort(gauche, r); QuickSort(r + 1, droite); } }
+*/

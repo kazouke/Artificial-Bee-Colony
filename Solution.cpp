@@ -49,12 +49,11 @@ void Solution::initialize() {
 
 
 	_function_fitness = (_pbm.f())(_solution);
-	//_current_fitness = CalculateFitness(_function_fitness); //ici
-
+	_current_fitness = CalculateFitness(_function_fitness); //ici
 	d_trial = 0;
 }
 
-/*double Solution::CalculateFitness(double fun)
+double Solution::CalculateFitness(double fun)
 {
 	double result = 0;
 	if (fun >= 0)
@@ -66,7 +65,7 @@ void Solution::initialize() {
 		result = 1 + abs(fun);
 	}
 	return result;
-}*/
+}
 
 double Solution::FunctionFitness() {
 	return _function_fitness;
@@ -93,13 +92,8 @@ void Solution::position(const int index, const double value) {
 }
 
 double Solution::maxSol() const {
-	double max = _solution[0];
-	if (max<0) max *= -1;
-	for (int i = 1; i < _solution.size(); i++)
-	{
-		if (_solution[i] > max) max = _solution[i];
-		if (_solution[i] * -1 > max) max = _solution[i] * -1;
-	}
+	double max = abs(_solution[0]);
+	for (int i = 1; i < _solution.size(); i++) if (abs(_solution[i]) > max) max = abs(_solution[i]);
 	return max;
 }
 

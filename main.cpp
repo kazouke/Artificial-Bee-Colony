@@ -54,9 +54,9 @@ Fonction choixFonction(int&xmin, int&xmax)
 		xmax=10;
 		return weierstrass;
 	}*/
-	xmin=-32.768;
-	xmax=32.768;
-	return somme_ackley;
+	xmin=-5;
+		xmax=10;
+		return somme_rosenbrock;
 }
 
 int nbIte()
