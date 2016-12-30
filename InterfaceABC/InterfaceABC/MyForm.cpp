@@ -9,6 +9,7 @@
 
 using namespace System;
 using namespace System::Windows::Forms;
+using namespace System::IO;
 
 Fonction InterfaceABC::MyForm::choixFonction(int&xmin, int&xmax)
 {
@@ -60,10 +61,13 @@ void InterfaceABC::MyForm::CreerSetUp(unsigned int nbRuns, unsigned int nbEvoSte
 		Fonction F = choixFonction(xmin, xmax);
 		Problem P(xmin, xmax, 30, F);
 		ABC A{ P, sup };
+
 		freopen("myfile.txt", "w", stdout);
-		//Test de la construction de SetUpParams réussi :
-		textBox3->Text = "Meilleur : " + A.evolution();
+		A.evolution();
 		fclose(stdout);
+
+		String^ Readfile = File::ReadAllText("myfile.txt");
+		textBox3->Text = Readfile;
 	}
 }
 
