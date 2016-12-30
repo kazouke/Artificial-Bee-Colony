@@ -78,6 +78,7 @@ namespace InterfaceABC {
 			this->numericUpDown5 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown4 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
@@ -90,7 +91,6 @@ namespace InterfaceABC {
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->BeginInit();
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
@@ -139,6 +139,16 @@ namespace InterfaceABC {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Control Parameters";
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(6, 125);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(54, 13);
+			this->label4->TabIndex = 26;
+			this->label4->Text = L"# of Trials";
+			this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
+			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
@@ -185,7 +195,7 @@ namespace InterfaceABC {
 			this->numericUpDown3->Name = L"numericUpDown3";
 			this->numericUpDown3->Size = System::Drawing::Size(53, 20);
 			this->numericUpDown3->TabIndex = 9;
-			this->numericUpDown3->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 50, 0, 0, 0 });
+			this->numericUpDown3->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 30, 0, 0, 0 });
 			// 
 			// label6
 			// 
@@ -200,7 +210,7 @@ namespace InterfaceABC {
 			// numericUpDown2
 			// 
 			this->numericUpDown2->Location = System::Drawing::Point(116, 45);
-			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2000000, 0, 0, 0 });
 			this->numericUpDown2->Name = L"numericUpDown2";
 			this->numericUpDown2->Size = System::Drawing::Size(53, 20);
 			this->numericUpDown2->TabIndex = 3;
@@ -248,16 +258,6 @@ namespace InterfaceABC {
 			this->label7->Size = System::Drawing::Size(42, 13);
 			this->label7->TabIndex = 4;
 			this->label7->Text = L"Results";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(6, 125);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(54, 13);
-			this->label4->TabIndex = 26;
-			this->label4->Text = L"# of Trials";
-			this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
 			// 
 			// MyForm
 			// 
