@@ -64,37 +64,16 @@ double schaffer(const vector<double> &individu)
 
 double weierstrass(const vector<double> &individu)
 {
+	double a=0.5;
+	int b=12;
 	double val = 0;
-	for (int i = 0; i < individu.size(); i++)
-	{
-		for (int k = 0; k < 20; k++)
+	
+	for (int k = 0; k < individu.size(); k++)
+	{		
+		for (int n = 0; n <= 20; n++)
 		{
-			val += pow(0.5, k) * cos(2 * M_PI * pow(3, k) * (individu[i] + 0.5));
+			val += pow(a, n) * cos(M_PI * pow(b, n) * individu[k]);
 		}
 	}
-	double temp = 0;
-	for (int k = 0; k < 20; k++)
-	{
-		temp += pow(0.5, k) * cos(2 * M_PI * pow(3, k) * 0.5);
-	}
-	return val - individu.size() * temp;
-}
-
-double proba_alea()
-{
-	return 1.0*rand() / RAND_MAX;
-}
-
-double aleatoire(double a, double b)
-{
-	return (proba_alea() - b / (b - a))*(b - a);
-}
-
-void pivotement(vector<double> &Delta, int dim)
-{
-	Delta.clear();
-	for (int i = 0; i < dim; ++i)
-	{
-		Delta.push_back((proba_alea() - .5) * 2);
-	}
+	return val;
 }
