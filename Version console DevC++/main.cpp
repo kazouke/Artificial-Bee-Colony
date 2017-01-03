@@ -61,7 +61,7 @@ Fonction choixFonction(int&xmin, int&xmax)
 
 int nbIte()
 {
-	std::cout<<"Nombre d'Iteration (30) : ";
+	std::cout<<"Nombre d'Execution (30) : ";
 	int i;
 	std::cin>>i;
 	while(i<1 || i>30) std::cin>>i;

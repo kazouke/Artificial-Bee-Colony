@@ -57,7 +57,7 @@ double ABC::evolution()
 	for (int i = 0; i<d_setup.independent_runs(); ++i)
 	{
 		initialize();
-		for (int j = 0; j<d_setup.nb_evolution_steps() && best_cost()>0; ++j)
+		for (int j = 0; j<d_setup.nb_evolution_steps(); ++j)
 		{
 			sendEmployedBees();
 			SendOnLookerBees(CalculateProbabilities());
