@@ -78,7 +78,7 @@ void Solution::position(const int index, const double value) {
 	_solution[index] = value;
 }
 
-double Solution::maxSol() const { //Pas ouf il faudrait utiliser la valeur absolue, et pourquoi on a des sources de nourriture négatives ?
+double Solution::maxSol() const { 
 	double max = _solution[0];
 	if (max<0) max *= -1;
 	for (int i = 1; i < _solution.size(); i++)
