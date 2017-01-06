@@ -172,15 +172,46 @@ std::vector <int> ABC::CalculateProbabilities() const
 
 void ABC::sendScoutBees() //Cherche et reinitialise la source qui a le moins evolué si plus de d_setup.max_trial() (100)
 {
-	int best = lower_cost();
+	/*
+	int maxtrialindex,i;
+	maxtrialindex=0;
+	for (i=1;i<FoodNumber;i++)
+	{
+    	if (trial[i]>trial[maxtrialindex])
+			maxtrialindex=i;
+	}
+	if(trial[maxtrialindex]>=limit)
+	{
+		init(maxtrialindex);
+	}
+	*/
+
 	int maxIndex = 0;
-	for (int i = 1; i<d_setup.population_size(); i++) if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial() && i != best) maxIndex = i;
+	for (int i = 0; i<d_setup.population_size() && i != lower_cost(); i++) 
+		if (d_solutions[i]->trial() > d_solutions[maxIndex]->trial()) 
+			maxIndex = i;
 	if (d_solutions[maxIndex]->trial() >= d_setup.max_trial())
 	{
+		//d_solutions[maxIndex]->initialize();/////////////////////////////////////////////////////////
+		
+		//d_fitnessValues[maxIndex] = particle{ maxIndex,d_solutions[maxIndex]->SolutionFitness() };
+		
+		
+		///*
+		Solution* newsol = new Solution{*d_solutions[maxIndex]};
 		d_solutions[maxIndex]->initialize();
-		d_fitnessValues[maxIndex] = particle{ maxIndex,d_solutions[maxIndex]->SolutionFitness() };
+		double FitnessSol = newsol->SolutionFitness();
+		
+		delete d_solutions[maxIndex];
+		d_solutions[maxIndex] = newsol;
+		newsol = nullptr;
+		d_fitnessValues[maxIndex].fitness = FitnessSol;
+		
+		delete newsol;
+		//*/
 	}
 }
+
 
 //-------------------Fonction de Tri-----------------------------	//Annulé car influence néfaste sur résultats
 //------------Tri croissant QuickSort vu en cours----------------

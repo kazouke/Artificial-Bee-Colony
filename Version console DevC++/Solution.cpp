@@ -59,7 +59,6 @@ double Solution::FunctionFitness() {
 
 double Solution::SolutionFitness() {
 	return (_pbm.f())(_solution);
-	//return _current_fitness; bug ?
 }
 
 unsigned int Solution::size() const {
