@@ -59,7 +59,6 @@ double Solution::FunctionFitness() {
 
 double Solution::SolutionFitness() {
 	return (_pbm.f())(_solution);
-	//return _current_fitness; bug ?
 }
 
 unsigned int Solution::size() const {
@@ -78,7 +77,7 @@ void Solution::position(const int index, const double value) {
 	_solution[index] = value;
 }
 
-double Solution::maxSol() const { 
+double Solution::maxSol() const {
 	double max = _solution[0];
 	if (max<0) max *= -1;
 	for (int i = 1; i < _solution.size(); i++)
